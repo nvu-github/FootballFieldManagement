@@ -1,0 +1,15 @@
+.container-mess {
+    display: flex;
+
+    .toast-icon {
+        margin-right: 10px;
+        
+        i {
+            font-size: 20px;
+        }
+    }
+}
+
+.rnc__notification-close-mark:after {
+    font-size: 20px;
+}

@@ -1,0 +1,51 @@
+$fa-font-path : "~@fortawesome/fontawesome-free-webfonts/webfonts";
+@import "~@fortawesome/fontawesome-free-webfonts/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free-webfonts/scss/fa-solid.scss";
+@import "~@fortawesome/fontawesome-free-webfonts/scss/fa-regular.scss";
+@import "~@fortawesome/fontawesome-free-webfonts/scss/fa-brands.scss";
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    color: black
+}
+
+label {
+    color: black;
+    font-weight: 600;
+}
+
+.btn-delete {
+    padding: 10px 15px;
+}
+
+.btn-update {
+    padding: 10px 15px;
+}
+
+.react-confirm-alert-body {
+    border: 1px solid grey !important;
+}
+
+.wrapper {
+    background-color: #f4f3ef;
+}
+
+.dropdownLogin {
+    font-size: 16px;
+
+    .dropdownToggleLogin {
+        color: black !important;
+
+        &:hover {
+            // background-color: white !important;
+            color: grey !important;
+        }
+    }
+
+    .dropdown-menu {
+        border: 1px solid grey;    
+    }
+
+    .dropdownToggleLogin::after {
+        border: none;
+    }
+}

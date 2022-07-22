@@ -1,0 +1,173 @@
+.modal-input,
+.modal-input::before {
+	bottom: 0;
+	left: 0;
+	right: 0;
+	top: 0
+}
+
+.modal-input {
+	display: none;
+	align-items: center;
+	flex-direction: column;
+	justify-content: center;
+	overflow: hidden;
+	position: fixed;
+	z-index: 1060;
+
+	&::before,
+	.modal-inner  {
+		display: none;
+	}
+
+	&::before {
+		content: '';
+		position: absolute;
+		background-color: rgba(42, 40, 40, 0.88);
+	}
+
+	&.is-active {
+		display: flex;
+
+		&::before,
+		.modal-inner {
+			display: block;
+		}
+
+		.modal-inner {
+			animation: slideUpInModal .15s ease-in-out both;
+		}
+
+		&::before {
+			animation: slideUpInModalBg .15s ease-in-out both;
+		}
+	}
+}
+
+.modal-inner-input {
+	max-height: calc(100vh - 16px * 2);
+	overflow: auto;
+	position: relative;
+	width: calc(100%  - ( 16px * 2 ));
+	max-width: 520px;
+	margin-left: 16px;
+	margin-right: 16px;
+	background: white;
+	border: 1px solid grey;
+	color: black;
+	overflow: hidden;
+	padding: 15px;
+	border-radius: 5px;
+
+	hr {
+		background-color: rgb(176, 176, 176);
+		height: 1px;
+	}
+
+	.modal-input-header {
+
+		.modal-input-title {
+			font-size: 30px;
+			font-weight: 600;
+			width: 90%;
+		}
+
+		.modal-input-close {
+			
+
+			i {
+				justify-content: right;
+				justify-items: right;	
+				cursor: pointer;
+			}
+		}
+	}
+
+	.modal-input-footer {
+		text-align: right;
+	}
+}
+
+.modal-content {
+	// padding: $modal--inner-padding-v__mobile $modal--inner-padding-h__mobile;
+}
+
+.modal-close {
+	background: transparent;
+	border: 0;
+	outline: 0;
+	padding: 0;
+	cursor: pointer;
+	position: absolute;
+	right: 16px;
+	top: 16px;
+	width: 16px;
+	height: 16px;
+
+	&::before,
+	&::after {
+		content: '';
+		display: block;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin-top: -(2px * 0.5);
+		margin-left: -(16px * 0.5);
+		width: 16px;
+		height: 2px;
+		background: rgba(21, 23, 25, 0.88);
+	}
+
+	&::before {
+		transform: rotate(225deg);
+	}
+
+	&::after {
+		transform: rotate(-45deg);
+	}
+
+	&:hover {
+
+		&::before,
+		&::after {
+			background: rgba(21, 23, 25, 0.88);
+		}
+	}
+}
+
+@media (min-width: 641px) {
+
+	.modal-inner {
+		margin: 0 auto;
+		max-height: calc(100vh - 48px * 2);
+	}
+
+	// .modal-content {
+	// 	padding-top: $modal--inner-padding-v__desktop;
+	// 	padding-bottom: $modal--inner-padding-v__desktop;
+	// 	padding-left: $modal--inner-padding-h__desktop;
+	// 	padding-right: $modal--inner-padding-h__desktop;
+	// }
+}
+
+@keyframes slideUpInModal {
+    0% {
+        opacity: 0;
+        transform: translateY(-24px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUpInModalBg {
+    0% {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
