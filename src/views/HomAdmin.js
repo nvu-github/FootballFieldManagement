@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import {
     Card,
@@ -9,11 +9,9 @@ import {
   
 const Home = (props) => {
 
-    // const HomeAdminStyleContainer = {
-    //     minHeight: "600px",
-    //     fontSize: "40px",
-    //     display: "flex",
-    // }
+    useEffect(() => {
+        document.title = 'Home';
+    });
 
     const HomeAdminStyleContent = {
         Margin: 0,
@@ -32,7 +30,7 @@ const Home = (props) => {
                     <CardBody>
                         <div style={{display: "flex", alignItems: "center", justifyContent: "center", minHeight: "400px", fontSize: "50px" }} className="container-welcome">
                             <div style={HomeAdminStyleContent} className="content-welcome text-center">
-                            <i className="fas fa-door-open"></i>  Hello, {(props.dataLogin.userInfo) ? props.dataLogin.userInfo.dataloginUsername  : ''}
+                            <i className="fas fa-door-open"></i>  Hello, {(props.dataLogin.userInfo) ? props.dataLogin.userInfo.username  : ''}
                             </div>
                         </div>
                     </CardBody>

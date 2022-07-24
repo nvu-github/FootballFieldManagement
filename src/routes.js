@@ -2,13 +2,13 @@ import Dashboard from "./views/admin/AccountManage";
 import Typography from "./views/admin/Typography";
 import TableList from "./views/admin/Tables";
 import UserPage from "./views/admin/User";
-// import Home from "./views/Home";
 import HomAdmin from "./views/HomAdmin";
-import Login from "./views/Login";
+// import Login from "./views/Login";
+// import Register from "./views/Register";
 
 const routes = [
     {
-        path: "/account",
+        path: "/manage-account",
         name: "Account manage",
         icon: "fas fa-users",
         component: Dashboard,
@@ -42,16 +42,44 @@ const routes = [
         component: HomAdmin,
         layout: ''
     },
+    {
+        path: "/notfound",
+        name: "Not Found",
+        icon: "nc-icon nc-single-02",
+        component: '',
+        layout: ''
+    },
+    {
+        path: "/login",
+        name: "Not Found",
+        icon: "nc-icon nc-single-02",
+        component: '',
+        layout: ''
+    },
+    {
+        path: "/register",
+        name: "Not Found",
+        icon: "nc-icon nc-single-02",
+        component: '',
+        layout: ''
+    },
 ];
 
-export const routesViewer = [
-    {
-        path: "login",
-        name: "Login",
-        icon: "",
-        component: Login,
-        layout: '/'
-    }
-];
+// export const routesViewer = [
+//     {
+//         path: "login",
+//         name: "Login",
+//         icon: "",
+//         component: Login,
+//         layout: '/'
+//     },
+//     {
+//         path: "register",
+//         name: "Register",
+//         icon: "",
+//         component: Register,
+//         layout: '/'
+//     }
+// ];
 
 export default routes;

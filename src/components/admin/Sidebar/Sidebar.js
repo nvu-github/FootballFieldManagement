@@ -46,7 +46,7 @@ function Sidebar(props) {
       <div className="sidebar-wrapper" ref={sidebar}>
         <Nav>
           {props.routes.map((prop, key) => {
-            if (prop.layout === '/admin' && prop.path !== '/') {
+            if (prop.path !== '/' && prop.path !== '/notfound') {
               return (
                 <li
                   className={

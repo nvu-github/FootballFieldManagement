@@ -1,12 +1,14 @@
 const Mlogin = require('../models/hethong/login.models');
+const jwt = require('jsonwebtoken');
 module.exports.middleware = function name(req, res, next) {
-    // if (!req.cookies.cookieLogin) {
-    //     res.redirect('login');
-    //     return;
-    // }
-
-    // gia tri chi ton tai trong phien lam viec
-    // res.locals.user = (req.cookies.cookieLogin) ? JSON.parse(req.cookies.cookieLogin)[1] : '';
-    // res.locals.permission = (req.cookies.cookieLogin) ? JSON.parse(req.cookies.cookieLogin)[2] : '';
-    next()
+    try {
+        const refreshToken = req.headers['x-access-token'];
+        const dataVerify = jwt.verify(refreshToken, process.env.ACCESS_SECRET_KEY_JWT);
+        if (dataVerify) {
+            next();
+        }
+    } catch (err) {
+        // console.log(err);
+        res.status(401).json({err});
+    } 
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Switch } from 'react-router-dom';
+import { BrowserRouter, Switch, useLocation , Redirect} from 'react-router-dom';
 import AppRoute from './utils/AppRoute';
 import ReactGA from 'react-ga'; 
 
@@ -13,7 +13,8 @@ import { userIsAuthenticated, userIsNotAuthenticated } from './hoc/authenticatio
 // import HomAdmin from './views/HomAdmin';
 // import MangerAccount from './views/admin/AccountManage';
 import Login from './views/Login';
-// import NotFound from './views/NotFound';
+import Register from './views/Register';
+import NotFound from './views/NotFound';
 
 // Css
 import './App.css';
@@ -28,30 +29,16 @@ import routes from './routes';
 // Initialize Google Analytics
 ReactGA.initialize(process.env.REACT_APP_GA_CODE);
 
-// const trackPage = page => {
-//   ReactGA.set({ page });
-//   ReactGA.pageview(page);
-// };
-
 const App = (props) => {
-
-    // const childRef = useRef();
-    // let location = useLocation();
+    const location = useLocation();
+    const checkNotFound = routes.some(item => location.pathname === (item.layout + item.path));
     return (
         <BrowserRouter>
             <Switch>
-                {/* <AppRoute path='/admin' component={MangerAccount} layout={LayoutAdmin} /> */}
-                {/* {routesViewer.map((prop, key) => {
-                    return (
-                        <AppRoute
-                            path={prop.layout + prop.path}
-                            component={ (prop.path !== 'login') ? prop.component : userIsNotAuthenticated(prop.component)}
-                            layout={LayoutDefault}
-                            key={key}
-                        />
-                    );
-                })} */}
                 <AppRoute path='/login' component={userIsNotAuthenticated(Login)} layout={LayoutAdmin} />
+                <AppRoute path='/register' component={userIsNotAuthenticated(Register)} layout={LayoutAdmin} />
+                <AppRoute path='/notfound' component={NotFound} layout={LayoutAdmin} />
+                {(location.pathname !== '/notfound' && checkNotFound === false) && <Redirect to="notfound" />}
                 {routes.map((prop, key) => {
                     return (
                         <AppRoute

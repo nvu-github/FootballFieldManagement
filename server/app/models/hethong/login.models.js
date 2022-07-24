@@ -9,6 +9,8 @@ const Login = new Schema({
     timelogin: { type: String, default: Date.now },
     status: { type: String, default: 1 },
     permission: { type: String },
+    token: {type: String, default: ''},
+    refreshToken: {type: String, default: ''}
 }, { collection: 'Login' });
 
 // add plugin

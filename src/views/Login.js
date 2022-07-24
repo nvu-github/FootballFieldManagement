@@ -1,16 +1,38 @@
-import React, { useState } from 'react';
-import '../assets/style/Login.scss'
+import React, { useEffect, useState } from 'react';
 import LoginService from '../service/LoginService';
 import { useHistory  } from "react-router-dom";
 import toastConfig from '../config/toastConfig';
 import { connect } from 'react-redux';
 import * as actions from "../store/actions";
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+// import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Link } from 'react-router-dom';
 
 const Login = (props) => {
 
     const [getusername, setUsername] = useState('');
     const [getpassword, setPassword] = useState('');
+    const [statusPassword, setStatusPassword] = useState(false);
     const history = useHistory();
+    const theme = createTheme();
+
+    useEffect(() => {
+        document.title = 'Login';
+    }, []);
+
+    const togglePassword = () => {
+        setStatusPassword(!statusPassword);
+    }
 
     const handleOnchangeInput = (event) => {
         if (event.target.name === 'username'){
@@ -20,7 +42,8 @@ const Login = (props) => {
         }
     }
 
-    const handleLogin = async () => {  
+    const handleLogin = async (e) => {  
+        e.preventDefault();
         try {
             props.showLoad();
             const username = getusername;
@@ -32,7 +55,15 @@ const Login = (props) => {
             }
             const data = await LoginService.handleLogin(username, password);
             if (data.data.dataloginStatus === 'success') {
-                props.userLoginSuccess(data.data.user);
+                const dataReduxLogin = {
+                    username: data.data.user.dataloginUsername,
+                }
+                const dataToken = {
+                    accessToken: data.data.user.dataloginToken,
+                    refreshToken: data.data.user.dataloginRefreshToken
+                }
+                props.userLoginSuccess(dataReduxLogin);
+                localStorage.setItem('token', JSON.stringify(dataToken));
                 props.hideLoad();
                 toastConfig('Success', 'Login success!');
                 return history.push("/");
@@ -50,57 +81,79 @@ const Login = (props) => {
         }
     }
 
-    const OtherMethods = props => (
-        <div id="alternativeLogin">
-            <label>Or sign in with:</label>
-            <div id="iconGroup">
-            <Facebook />
-            <Google />
-            </div>
-        </div>
-    );
-
-    const Facebook = props => (
-        <i className="fab fa-facebook-f iconfacebook"></i>
-      );
-      
-    const Google = props => (
-        <i className="fab fa-google-plus-g icongoogle"></i>
-    );
-
-    const FormHeader = props => (
-        <h2 id="headerTitle">{props.title}</h2>
-    );
-
     return (
         <>
-            <div className='login-container'>
-                <div id="loginform">
-                    <FormHeader title="Login" />
-                    <form method='post' action=''>
-                        <div className="rowinp">
-                            <label>Username</label>
-                            <input type='text' 
-                            name='username' 
-                            value={getusername} 
-                            onChange={(event) => handleOnchangeInput(event)} 
-                            placeholder='Enter your username'/>
-                        </div>
-                        <div className="rowinp">
-                            <label>Password</label>
-                            <input type='password' 
-                            name='password' 
-                            value={getpassword} 
-                            onChange={(event) => handleOnchangeInput(event)}
-                            placeholder='Enter your password'/>
-                        </div>
-                        <div id="button" className="rowinp">
-                            <button type='button' onClick={event => {handleLogin(event)}} name='sublogin'>Log in</button>
-                        </div>
-                        <OtherMethods />
-                    </form>
-                </div>
-            </div>
+            <ThemeProvider theme={theme}>
+                <Container component="main" maxWidth="xs">
+                    <CssBaseline />
+                    <Box
+                    sx={{
+                        marginTop: 8,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                    }}
+                    >
+                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                        {/* <i className="fas fa-lock"></i> */}
+                        <i className="fas fa-futbol"></i>
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Sign in
+                    </Typography>
+                    <Box component="form" onSubmit={handleLogin} noValidate sx={{ mt: 1 }}>
+                        <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="username"
+                        label="Username"
+                        name="username"
+                        autoComplete="username"
+                        value={getusername} 
+                        onChange={(event) => handleOnchangeInput(event)} 
+                        autoFocus
+                        />
+                        <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="password"
+                        label="Password"
+                        type={!statusPassword ? "password" : "text"}
+                        id="password"
+                        autoComplete="current-password"
+                        value={getpassword} 
+                        onChange={(event) => handleOnchangeInput(event)}
+                        />
+                        <FormControlLabel
+                        control={<Checkbox onChange={togglePassword} value="showPassword" color="primary" />}
+                        label="Show password"
+                        />
+                        <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        sx={{ mt: 3, mb: 2 }}
+                        >
+                        Sign In
+                        </Button>
+                        <Grid style={{ justifyContent: 'right' }} container>
+                        {/* <Grid item xs>
+                            <Link style={{pointerEvents: 'none', color: 'white'}} href="#" variant="body2">
+                            Forgot password?
+                            </Link>
+                        </Grid> */}
+                        <Grid item>
+                            <Link style={{color : 'black'}} to="/register" className='MuiTypography-root MuiTypography-body2 MuiLink-root MuiLink-underlineAlways css-101ca9i-MuiTypography-root-MuiLink-root'>
+                                {"Don't have an account? Sign Up"}
+                            </Link>
+                        </Grid>
+                        </Grid>
+                    </Box>
+                    </Box>
+                </Container>
+                </ThemeProvider>
         </>
     );
 }

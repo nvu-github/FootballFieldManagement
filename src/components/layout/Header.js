@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { Link, useLocation } from 'react-router-dom';
 import Logo from './partials/Logo';
 import MenuLogin from './partials/MenuLogin';
+import BannerHeader from './BannerHeader';
 import {connect} from 'react-redux';
 
 const propTypes = {
@@ -85,6 +86,7 @@ const Header = ({
         // {...props}
         className={classes}
         >
+        <BannerHeader />
         <div className="container">
             <div className={
             classNames(
@@ -118,7 +120,7 @@ const Header = ({
                         navPosition && `header-nav-${navPosition}`
                         )}>
                         {props.routes.map((prop, key) => {
-                            if (prop.path !== '/') {
+                            if (prop.path !== '/' && prop.component !== '') {
                                 return (
                                     <li
                                     className={

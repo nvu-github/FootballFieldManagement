@@ -13,6 +13,10 @@ const ManageAccountLoginService = {
         return axios.post('/api/account/getaccountupdate', {id});
     },
 
+    handleUpdateAccount(data) {
+        return axios.post('/api/account/update', {data});
+    },
+
     handleDeleteAccount(id) {
         return axios.post('/api/account/delete', {id});
     }

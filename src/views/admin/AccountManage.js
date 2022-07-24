@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import React, { createRef, useEffect, useState } from "react";
+import React, {useEffect, useState } from "react";
 import {
   Card,
   CardHeader,
@@ -18,7 +18,6 @@ import * as actions from "../../store/actions";
 import { confirmAlert } from 'react-confirm-alert';
 
 class AccountManage extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -29,6 +28,10 @@ class AccountManage extends React.Component {
             valueBtnModal: '',
             textBtnModal: 'Save'
         }
+    }
+
+    componentDidMount() {
+        document.title = 'Account Manage';
     }
 
     toggle = () => {
@@ -47,13 +50,12 @@ class AccountManage extends React.Component {
     };
 
     AddAccount = async (e) => {
-        console.log(e);
-        return;
         try {
             this.props.showLoad();
-            const username = this.state.username;
-            const password = this.state.password;
-            const permission = this.state.permission;
+            const id            = e.target.getAttribute("value");
+            const username      = this.state.username;
+            const password      = this.state.password;
+            const permission    = this.state.permission;
 
             if (username === "" || password === "" || permission === "") {
                 toastConfig("Error", "Username or password or permission is NULL");
@@ -61,20 +63,42 @@ class AccountManage extends React.Component {
                 return;
             }
 
-            const dataAdd = await ManageAccountService.handleAddAccount(username, password, permission);
-
-            if (dataAdd.Mess !== '' && dataAdd.Mess === 'Exists') {
-                toastConfig("Error", "Username exists!");
-                this.props.hideLoad();
-                return;
+            if (id === '') {
+                const dataAdd = await ManageAccountService.handleAddAccount(username, password, permission);
+                if (dataAdd.Mess !== '' && dataAdd.Mess === 'Exists') {
+                    toastConfig("Error", "Username exists!");
+                    this.props.hideLoad();
+                    return;
+                } else {
+                    toastConfig("Success", "Add user success");
+                    this.props.hideLoad();
+                    this.setState({
+                        refreshkey: this.state.refreshkey + 1
+                    });
+                    this.toggle();
+                    return;
+                }
             } else {
-                toastConfig("Success", "Add user success");
-                this.props.hideLoad();
-                this.setState({
-                    refreshkey: this.state.refreshkey + 1
-                });
-                this.toggle();
-                return;
+                const dataSendUpdate = {
+                    id,
+                    username, 
+                    password,
+                    permission
+                }
+                const dataUpdate = await ManageAccountService.handleUpdateAccount(dataSendUpdate);
+                if (dataUpdate['data']['Mess'] === 'Success') {
+                    this.props.hideLoad();
+                    toastConfig('Success', 'Update account success!')
+                    this.setState({
+                        refreshkey: this.state.refreshkey + 1
+                    });
+                    this.toggle();
+                    return;
+                } else {
+                    this.props.hideLoad();
+                    toastConfig('Fail', 'Update account fail!');
+                    return;
+                }
             }
         } catch (er) {
             console.log(er);
@@ -82,7 +106,7 @@ class AccountManage extends React.Component {
     }
 
     handleDelete = (e) => {
-        const id = e.target.getAttribute("value")
+        const id = e.target.getAttribute("value");
         confirmAlert({
             message: 'Are you sure delete.',
             buttons: [
@@ -227,7 +251,7 @@ const ModalAccount = (props) => {
                     </Row>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="primary" className="btnSave" id={props.state.valueBtnModal} onClick={props.submitform}>{props.state.textBtnModal}</Button>{' '}
+                    <Button color="primary" className="btnSave" value={props.state.valueBtnModal} onClick={props.submitform}>{props.state.textBtnModal}</Button>{' '}
                     <Button color="secondary" onClick={props.toggle}>Cancel</Button>
                 </ModalFooter>
                 </Modal>
@@ -244,7 +268,7 @@ const TableAccount = (props) => {
         props.props.showLoad();
         async function fetchData() {
             const datafunction = await ManageAccountService.handleGetAccount();
-            if (!ignore) {
+            if (!ignore && datafunction) {
                 props.props.hideLoad();
                 setDataSites(datafunction['data']['dataAccount']);
             }

@@ -8,6 +8,8 @@ const Rhomeadmin = require('./admin/homeadmin.routes');
 const Rmanageaccount = require('./admin/addaccount.routes');
 const Rlogin = require('./login.routes');
 
+const authMidlleware = require('../app/core/auth.middleware');
+
 
 function routes(app) {
     // admin
@@ -15,6 +17,7 @@ function routes(app) {
 
     // system
     app.use('/api/login', Rlogin);
+    app.use(authMidlleware.middleware);
     app.use('/api/account', Rmanageaccount);
 
     // user

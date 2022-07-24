@@ -20,19 +20,20 @@ class Cmanageaccount {
         dataReturn.Res = '';
 
         const checkAccount = await Mlogin.findOne({username: dataAdd['username']});
+        const password = await bcrypt.hash(dataAdd['password'], 10);
 
         if (checkAccount != null) {
             dataReturn.Mess = 'Exists';
         } else {
             const AccountAdd = {
                 'username': dataAdd['username'],
-                'password': dataAdd['password'],
+                'password': password,
                 'timelogin': '',
                 'status': '1',
                 'permission': dataAdd['permission']
             }
     
-            const Mlogins = new Mlogin(dataAdd);
+            const Mlogins = new Mlogin(AccountAdd);
             const addAccount = await Mlogins.save();
             if (addAccount != null) {
                 dataReturn.Mess = 'Success';
@@ -59,6 +60,28 @@ class Cmanageaccount {
 
         res.setHeader('Content-Type', 'application/json');
         res.status(200).json({Mess: ReMess, data: dataReturn});
+    }
+
+    async updateAccount(req, res, next) {
+        const data = req.body;
+        const query = {'_id': data['data']['id']};
+        const password = await bcrypt.hash(data['data']['password'], 10);
+        const newData = {
+            'username': data['data']['username'],
+            'password': password,
+            'permission': data['data']['permission']
+        };
+        let ReMess = '';
+        const ResUpdate = await Mlogin.findOneAndUpdate(query, newData, {returnOriginal: false, upsert: true});
+
+        if (ResUpdate) {
+            ReMess = 'Success';
+        } else {
+            ReMess = 'Fail';
+        }
+
+        res.setHeader('Content-Type', 'application/json');
+        res.status(200).json({Mess: ReMess});
     }
 
     async delAccount(req, res, next){

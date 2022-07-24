@@ -12,13 +12,11 @@ import routes from "../routes";
 import  { ReactNotifications }  from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 import Loader from '../components/elements/LoadPage';
+import { connect } from "react-redux";
 
 var ps;
 
 const LayoutAdmin = (props) => {
-
-    // const [backgroundColor] = useState("black");
-    // const [activeColor] = useState("info");
     const mainPanel = useRef();
     const location = useLocation();
 
@@ -34,6 +32,7 @@ const LayoutAdmin = (props) => {
             }
             };
     }, []);
+
     useEffect(() => {
         mainPanel.current.scrollTop = 0;
         document.scrollingElement.scrollTop = 0;
@@ -42,27 +41,15 @@ const LayoutAdmin = (props) => {
     return (
         <>
             <ReactNotifications />
-            <div className="wrapper">
-                {/* <Sidebar
-                    {...props}
-                    routes={routes}
-                    bgColor={backgroundColor}
-                    activeColor={activeColor}
-                /> */}
-                <Header routes={routes} />
-                <div className="main-panel" ref={mainPanel}>
-                    {/* <DemoNavbar {...props} /> */}
+            <div style={(!props.isLogin) ? {backgroundColor: 'white'} : {backgroundColor: '#f4f3ef'}} className="wrapper">
+                {(location.pathname !== '/notfound' && location.pathname !== '/login' && location.pathname !== '/register')
+                ? <Header routes={routes} />
+                : '' }
+                <div style={(!props.isLogin) ? {backgroundColor: 'white'} : {backgroundColor: '#f4f3ef'}} className="main-panel" ref={mainPanel}>
                     {props.children}
-                    {/* {routes.map((prop, key) => {
-                        return (
-                            <Route
-                                path={prop.layout + prop.path}
-                                component={prop.component}
-                                key={key}
-                            />
-                        );
-                    })} */}
-                    <Footer fluid />
+                {(location.pathname !== '/notfound' && location.pathname !== '/login' && location.pathname !== '/register')
+                ? <Footer fluid />
+                : ''}
                 </div>
                 <Loader />
             </div>
@@ -70,4 +57,10 @@ const LayoutAdmin = (props) => {
     );
 }
 
-export default LayoutAdmin;
+const mapStateToProps = state => {
+    return {
+        isLogin: state.userLogin.isLogin
+    }
+};
+
+export default connect(mapStateToProps, null)(LayoutAdmin);

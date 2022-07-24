@@ -15,7 +15,7 @@ const isProduction = process.env.NODE_ENV === "production";
 const routes = require('./routes/index.routes');
 const db = require('./config/db');
 const authMidlleware = require('./app/core/auth.middleware');
-const cors = require('cors')
+const cors = require('cors');
 
 const corsOptions ={
   origin: process.env.REACT_ENV_CLIENT, 
@@ -43,7 +43,7 @@ app.use(
     isProduction ? morgan("combined", { stream: accessLogStream }) : morgan("dev")
 );
 
-app.use(authMidlleware.middleware);
+// app.use(authMidlleware.middleware);
 // routes init
 routes(app);
 

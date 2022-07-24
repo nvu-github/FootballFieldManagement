@@ -19,6 +19,7 @@ const MenuLogin = (props) => {
 
     const signout = async () => {
         userLogout();
+        localStorage.removeItem('token');
         history.push("/login");
     }
 
@@ -57,7 +58,7 @@ const MenuLogin = (props) => {
                 ? (
                     <Dropdown className='dropdownLogin' isOpen={dropdownOpen} group toggle={dropdownToggle}>
                         <DropdownToggle className='dropdownToggleLogin' nav caret>
-                        <i className="fas fa-user"></i> Hello, admin
+                        <i className="fas fa-user"></i> Hello, {(props.dataLogin.userInfo) ? props.dataLogin.userInfo.username  : ''}
                         </DropdownToggle>
                         <DropdownMenu>
                         <DropdownItem style={{ cursor: "pointer" }}><i className="fas fa-exchange-alt"></i> Change password</DropdownItem>
@@ -76,7 +77,8 @@ const MenuLogin = (props) => {
 
 const mapStateToProps = state =>{
     return {
-        isLogin: state.userLogin.isLogin
+        isLogin: state.userLogin.isLogin,
+        dataLogin: state.userLogin
     }
 };
 
