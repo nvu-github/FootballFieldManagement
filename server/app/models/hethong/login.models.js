@@ -4,6 +4,7 @@ const slug = require('mongoose-slug-generator');
 const mongooesDelete = require('mongoose-delete');
 
 const Login = new Schema({
+    _id: {type: String, default: ''},
     username: { type: String, require: true, index:true, sparse:true , default: '' },
     password: { type: String, default: ''},
     timelogin: { type: String, default: Date.now },
@@ -11,7 +12,7 @@ const Login = new Schema({
     permission: { type: String },
     token: {type: String, default: ''},
     refreshToken: {type: String, default: ''}
-}, { collection: 'Login' });
+}, { collection: 'Login', _id: false });
 
 // add plugin
 // mongoose.plugin(slug);

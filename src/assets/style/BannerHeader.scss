@@ -1,0 +1,22 @@
+.banner-header {
+    background-color: #f4f3ef !important;
+    color: black;
+    height: 130px;
+    
+    &__side-label {
+        font-size: 17px;
+    }
+
+    &__content {
+        padding: 10px;
+        display: flex;
+
+        &__logo-header {
+            
+            img {
+                width: 90px;
+                height: 90px;
+            }
+        }
+    }
+}

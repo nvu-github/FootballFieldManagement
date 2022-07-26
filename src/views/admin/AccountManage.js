@@ -16,6 +16,10 @@ import ManageAccountService from '../../service/admin/ManageAccountService';
 import toastConfig from "../../config/toastConfig";
 import * as actions from "../../store/actions";
 import { confirmAlert } from 'react-confirm-alert';
+// import FroalaEditor from 'react-froala-wysiwyg';
+// import 'froala-editor/css/froala_editor.pkgd.min.css';
+// import 'froala-editor/css/froala_style.css';
+// import 'froala-editor/js/plugins.pkgd.min.js';
 
 class AccountManage extends React.Component {
     constructor(props) {
@@ -26,8 +30,10 @@ class AccountManage extends React.Component {
             permission: '',
             refreshkey: 0, 
             valueBtnModal: '',
-            textBtnModal: 'Save'
+            textBtnModal: 'Save',
+            // content: ''
         }
+        // this.handleModelChange = this.handleModelChange.bind(this)
     }
 
     componentDidMount() {
@@ -58,25 +64,31 @@ class AccountManage extends React.Component {
             const permission    = this.state.permission;
 
             if (username === "" || password === "" || permission === "") {
-                toastConfig("Error", "Username or password or permission is NULL");
+                toastConfig("Error", "Vui lòng nhập đầy đủ các thông tin");
                 this.props.hideLoad();
                 return;
             }
 
             if (id === '') {
                 const dataAdd = await ManageAccountService.handleAddAccount(username, password, permission);
-                if (dataAdd.Mess !== '' && dataAdd.Mess === 'Exists') {
-                    toastConfig("Error", "Username exists!");
+                if (dataAdd.data.Mess === 'Exists') {
+                    toastConfig("Error", "Tên đăng nhập đã tồn tại!");
                     this.props.hideLoad();
                     return;
-                } else {
-                    toastConfig("Success", "Add user success");
+                } else if (dataAdd.data.Mess === 'Success') {
+                    toastConfig("Success", "Thêm tài khoản đăng nhập thành công");
                     this.props.hideLoad();
                     this.setState({
                         refreshkey: this.state.refreshkey + 1
                     });
                     this.toggle();
                     return;
+                } else {
+                    toastConfig("Error", "Thêm tài khoản đăng nhập thất bại");
+                    this.props.hideLoad();
+                    this.toggle();
+                    return;
+
                 }
             } else {
                 const dataSendUpdate = {
@@ -88,7 +100,7 @@ class AccountManage extends React.Component {
                 const dataUpdate = await ManageAccountService.handleUpdateAccount(dataSendUpdate);
                 if (dataUpdate['data']['Mess'] === 'Success') {
                     this.props.hideLoad();
-                    toastConfig('Success', 'Update account success!')
+                    toastConfig('Success', 'Cập nhật tài khoản thành công')
                     this.setState({
                         refreshkey: this.state.refreshkey + 1
                     });
@@ -96,7 +108,7 @@ class AccountManage extends React.Component {
                     return;
                 } else {
                     this.props.hideLoad();
-                    toastConfig('Fail', 'Update account fail!');
+                    toastConfig('Fail', 'Cập nhật tài khoản thất bại!');
                     return;
                 }
             }
@@ -108,14 +120,14 @@ class AccountManage extends React.Component {
     handleDelete = (e) => {
         const id = e.target.getAttribute("value");
         confirmAlert({
-            message: 'Are you sure delete.',
+            message: 'Bạn có chắc chắn muốn xóa.',
             buttons: [
                 {
-                    label: 'Yes',
+                    label: 'Xóa',
                     onClick: () => {this.handleConfirmDelete(id)}
                 },
                 {
-                    label: 'No',
+                    label: 'Hủy',
                 }
             ]
         });
@@ -128,9 +140,9 @@ class AccountManage extends React.Component {
             this.setState({
                 refreshkey: this.state.refreshkey + 1
             });
-            toastConfig('Success', 'Delete account success');
+            toastConfig('Success', 'Xóa tài khoản thành công');
         } else {
-            toastConfig('Error', 'Delete account fail');
+            toastConfig('Error', 'Xóa tài khoản thất bại');
         }
         this.props.hideLoad();
     }
@@ -164,6 +176,12 @@ class AccountManage extends React.Component {
         this.setState({...dataIns});
     }
 
+    // handleModelChange (model) {
+    //     this.setState({
+    //       content: model
+    //     });
+    // }
+
     render() {
         return (
             <>
@@ -171,11 +189,86 @@ class AccountManage extends React.Component {
                 <Row>
                     <Col md="12">
                         <Card>
-                        
                         <CardHeader>
                             <CardTitle tag="h4">List Account</CardTitle>
                         </CardHeader>
                         <CardBody>
+                        {/* <FroalaEditor
+                            model={this.state.content}
+                            onModelChange={this.handleModelChange}
+                            config={{
+                                charCounterCount: false,
+                                placeholderText: 'Edit Your Content Here!',
+                                imageUpload: true,
+                                imageDefaultAlign: 'left',
+                                imageManagerLoadURL: process.env.REACT_APP_BACKEND_URL + '/api/getfile',
+                                imageDefaultDisplay: 'inline-block',
+                                // Set max image size to 5MB.
+                                imageMaxSize: 5 * 1024 * 1024,
+                                // Allow to upload PNG and JPG.
+                                imageAllowedTypes: ['jpeg', 'jpg', 'png'],
+                                events: {
+                                'filesManager.beforeUpload': function(files) {
+                                    // Before image is uploaded
+                                    // console.log(files);
+
+                                    var editor = this;
+                                    if (files.length) {
+                                        // Create a File Reader.
+                                        var reader = new FileReader();
+                                        // Set the reader to insert images when they are loaded.
+                                        reader.onload = function(e) {
+                                        var result = e.target.result;
+                                        // console.log(editor.image.display);
+                                        editor.image.insert(result, null, null, editor.image.get());
+                                        };
+                                        // Read image as base64.
+                                        reader.readAsDataURL(files[0]);
+                                    }
+                                    editor.popups.hideAll();
+                                    // const data = new FormData();
+                                    // data.append('image', images[0]);
+                                    // console.log(this.image)
+                                    // axios.post('your_imgur_api_url', data, {
+                                    //     headers: {
+                                    //         'accept': 'application/json',
+                                    //         'Authorization': 'your_imgur_client_id/api_key',
+                                    //         'Accept-Language': 'en-US,en;q=0.8',
+                                    //         'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
+                                    //     }
+                                    // }).then(res => {
+                                    //     editor.image.insert(res.data.data.link, null, null, editor.image.get());
+                                    // }).catch(err => {
+                                    // console.log(err);
+                                    // });
+                                    return false;
+                                },
+                                'image.beforeUpload' : function (files) {
+                                    let editor = this;
+                                    if (files.length) {
+                                        // Create a File Reader.
+                                        var reader = new FileReader();
+                                        // Set the reader to insert images when they are loaded.
+                                        reader.onload = function(e) {
+                                        var result = e.target.result;
+                                        // console.log(editor.image.display);
+                                        editor.image.insert(result, null, null, editor.image.get());
+                                        };
+                                        // Read image as base64.
+                                        reader.readAsDataURL(files[0]);
+                                    }
+                                    editor.popups.hideAll();
+                                    return false;
+                                },
+                                'image.loaded' : function (data) {
+                                    // Làm gì đó ở đây. 
+                                   // đây là phiên bản trình soạn thảo. 
+                                   console.log(2);
+                                   console.log(this);
+                                 }
+                                }
+                            }}
+                            /> */}
                             <Col className="text-right" md="12">
                                 <Button className="btn btn-primary" onClick={this.toggle}>Add account</Button>
                             </Col>
@@ -205,8 +298,8 @@ class AccountManage extends React.Component {
 }
 
 const options = [
-    { value: '1', label: 'Admin' },
-    { value: '2', label: 'User' },
+    { value: '1', label: 'Quản trị' },
+    { value: '2', label: 'Người dùng' },
 ]
 
 const ModalAccount = (props) => {
@@ -225,7 +318,7 @@ const ModalAccount = (props) => {
                         <Col md="12">
                             <div className="form-group row">
                                 <label className="col-md-4">
-                                    Username:
+                                    Tên đăng nhập:
                                 </label>
                                 <div className="col-md-8">
                                     <input name="username" onChange={props.onchangeinput} value={props.state.username} type="text" id="username" className="form-control"/>
@@ -233,7 +326,7 @@ const ModalAccount = (props) => {
                             </div>
                             <div className="form-group row">
                                 <label className="col-md-4">
-                                    Password:
+                                    Mật khẩu:
                                 </label>
                                 <div className="col-md-8">
                                     <input name="password" onChange={props.onchangeinput} value={props.state.password} type="password" id="password" className="form-control"/>
@@ -241,7 +334,7 @@ const ModalAccount = (props) => {
                             </div>
                             <div className="form-group row">
                                 <label className="col-md-4">
-                                    Permission:
+                                    Quyền:
                                 </label>
                                 <div className="col-md-8">
                                     <Select options={options} value={optionselected} onChange={props.onchangeselect} name="permission" />
@@ -283,11 +376,11 @@ const TableAccount = (props) => {
             <Table responsive>
                 <thead className="text-primary">
                     <tr>
-                        <th>N.o</th>
-                        <th>Username</th>
-                        <th>Permission</th>
-                        <th>Time login</th>
-                        <th className="text-center">Action</th>
+                        <th>STT</th>
+                        <th>Tên đăng nhập</th>
+                        <th>Quyền</th>
+                        <th>Thời gian đăng nhập</th>
+                        <th className="text-center">Tác vụ</th>
                     </tr>
                 </thead>
                 <tbody>

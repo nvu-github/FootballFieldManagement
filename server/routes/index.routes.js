@@ -16,6 +16,7 @@ function routes(app) {
     app.use('/homeadmin', Rhomeadmin);
 
     // system
+    // app.use('/api/getfile', Rlogin);
     app.use('/api/login', Rlogin);
     app.use(authMidlleware.middleware);
     app.use('/api/account', Rmanageaccount);

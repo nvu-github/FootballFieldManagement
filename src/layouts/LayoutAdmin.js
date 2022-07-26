@@ -40,13 +40,15 @@ const LayoutAdmin = (props) => {
 
     return (
         <>
-            <ReactNotifications />
+            <ReactNotifications />  
             <div style={(!props.isLogin) ? {backgroundColor: 'white'} : {backgroundColor: '#f4f3ef'}} className="wrapper">
                 {(location.pathname !== '/notfound' && location.pathname !== '/login' && location.pathname !== '/register')
                 ? <Header routes={routes} />
                 : '' }
                 <div style={(!props.isLogin) ? {backgroundColor: 'white'} : {backgroundColor: '#f4f3ef'}} className="main-panel" ref={mainPanel}>
+                    <div className="container container-main">
                     {props.children}
+                    </div>
                 {(location.pathname !== '/notfound' && location.pathname !== '/login' && location.pathname !== '/register')
                 ? <Footer fluid />
                 : ''}

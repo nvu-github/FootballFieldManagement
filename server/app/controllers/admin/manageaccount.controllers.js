@@ -3,6 +3,8 @@ const sha1 = require('sha1');
 const { mutilpleMongooseToObject } = require('../../../util/mongoose');
 const { response } = require('express');
 const bcrypt = require('bcrypt');
+const UsersModel = require('../../models/user.models');
+const userModels = require('../../models/user.models');
 
 class Cmanageaccount {
 
@@ -25,19 +27,31 @@ class Cmanageaccount {
         if (checkAccount != null) {
             dataReturn.Mess = 'Exists';
         } else {
-            const AccountAdd = {
-                'username': dataAdd['username'],
-                'password': password,
-                'timelogin': '',
-                'status': '1',
-                'permission': dataAdd['permission']
+
+            const dataUser = {
+                'nameUser': dataAdd['username'],
             }
-    
-            const Mlogins = new Mlogin(AccountAdd);
-            const addAccount = await Mlogins.save();
-            if (addAccount != null) {
-                dataReturn.Mess = 'Success';
+
+            const Muser = new UsersModel(dataUser);
+            const ResUser = await Muser.save();
+
+            if (ResUser) {
+                const AccountAdd = {
+                    '_id': ResUser['_id'],
+                    'username': dataAdd['username'],
+                    'password': password,
+                    'timelogin': '',
+                    'status': '1',
+                    'permission': dataAdd['permission']
+                }
+        
+                const Mlogins = new Mlogin(AccountAdd);
+                const addAccount = await Mlogins.save();
+                if (addAccount) {
+                    dataReturn.Mess = 'Success';
+                }
             }
+            
         }
 
         res.setHeader('Content-Type', 'application/json');
@@ -87,10 +101,11 @@ class Cmanageaccount {
     async delAccount(req, res, next){
         const id = req.body;
 
+        const ResUser = await userModels.deleteOne({_id: id['id']}); 
         const resDel = await Mlogin.deleteOne({_id: id['id']});
         let ReMess = '';
 
-        if (resDel) {
+        if (resDel && ResUser) {
             ReMess = 'Success';
         } else {
             ReMess = 'Fail';

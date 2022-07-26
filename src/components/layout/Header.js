@@ -37,6 +37,7 @@ const Header = ({
     const nav = useRef(null);
     const hamburger = useRef(null);
     const location = useLocation();
+    const [stickyClass, setStickyClass] = useState('');
 
     const activeRoute = (routeName) => {
         return location.pathname.indexOf(routeName) > -1 ? "active" : "";
@@ -46,12 +47,22 @@ const Header = ({
         isActive && openMenu();
         document.addEventListener('keydown', keyPress);
         document.addEventListener('click', clickOutside);
+        window.addEventListener('scroll', stickNavbar);
         return () => {
         document.removeEventListener('keydown', keyPress);
         document.removeEventListener('click', clickOutside);
         closeMenu();
+        window.removeEventListener('scroll', stickNavbar);
         };
     });  
+
+    const stickNavbar = () => {
+        if (window !== undefined) {
+          let windowHeight = window.scrollY;
+          // window height changed for the demo
+          windowHeight > 150 ? setStickyClass('sticky-nav') : setStickyClass('');
+        }
+    };
 
     const openMenu = () => {
         document.body.classList.add('off-nav-is-active');
@@ -87,60 +98,62 @@ const Header = ({
         className={classes}
         >
         <BannerHeader />
-        <div className="container">
-            <div className={
-            classNames(
-                'site-header-inner',
-                bottomDivider && 'has-bottom-divider'
-            )}>
-            <Logo />
-            {!hideNav &&
-                <>
-                <button
-                    ref={hamburger}
-                    className="header-nav-toggle"
-                    onClick={isActive ? closeMenu : openMenu}
-                >
-                    <span className="screen-reader">Menu</span>
-                    <span className="hamburger">
-                    <span className="hamburger-inner"></span>
-                    </span>
-                </button>
-                <nav
-                    ref={nav}
-                    className={
-                    classNames(
-                        'header-nav',
-                        isActive && 'is-active'
-                    )}>
-                    <div className="header-nav-inner">
-                    <ul className={
+        <div className={`menu-content ${stickyClass}`}>
+            <div className="container">
+                <div className={
+                classNames(
+                    'site-header-inner',
+                    bottomDivider && 'has-bottom-divider'
+                )}>
+                <Logo />
+                {!hideNav &&
+                    <>
+                    <button
+                        ref={hamburger}
+                        className="header-nav-toggle"
+                        onClick={isActive ? closeMenu : openMenu}
+                    >
+                        <span className="screen-reader">Menu</span>
+                        <span className="hamburger">
+                        <span className="hamburger-inner"></span>
+                        </span>
+                    </button>
+                    <nav
+                        ref={nav}
+                        className={
                         classNames(
-                        'list-reset text-xs',
-                        navPosition && `header-nav-${navPosition}`
+                            'header-nav',
+                            isActive && 'is-active'
                         )}>
-                        {props.routes.map((prop, key) => {
-                            if (prop.path !== '/' && prop.component !== '') {
-                                return (
-                                    <li
-                                    className={
-                                        activeRoute(prop.path) + (prop.pro ? " active-item" : "")
-                                      }
-                                    key={key}>
-                                        <Link to={prop.layout + prop.path}>{prop.name}</Link>
-                                    </li>
-                                );
-                            }
-                            return null;
-                        })}
-                    </ul>
+                        <div className="header-nav-inner">
+                        <ul className={
+                            classNames(
+                            'list-reset text-xs',
+                            navPosition && `header-nav-${navPosition}`
+                            )}>
+                            {props.routes.map((prop, key) => {
+                                if (prop.path !== '/' && prop.component !== '') {
+                                    return (
+                                        <li
+                                        className={
+                                            activeRoute(prop.path) + (prop.pro ? " active-item" : "")
+                                        }
+                                        key={key}>
+                                            <Link to={prop.layout + prop.path}>{prop.name}</Link>
+                                        </li>
+                                    );
+                                }
+                                return null;
+                            })}
+                        </ul>
 
-                    <div className='menuLogin'>
-                        <MenuLogin />
-                    </div>
-                    </div>
-                </nav>
-                </>}
+                        <div className='menuLogin'>
+                            <MenuLogin />
+                        </div>
+                        </div>
+                    </nav>
+                    </>}
+                </div>
             </div>
         </div>
         </header>

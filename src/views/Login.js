@@ -50,7 +50,7 @@ const Login = (props) => {
             const password = getpassword; 
             if (username === '' || password === '') {
                 props.hideLoad();
-                toastConfig('Error', 'Username or password is NULL!');
+                toastConfig('Error', 'Vui lòng nhập thông tin đăng nhập!');
                 return;
             }
             const data = await LoginService.handleLogin(username, password);
@@ -69,11 +69,11 @@ const Login = (props) => {
                 return history.push("/");
             } else if (data.data.dataloginStatus === 'errpassword') {
                 props.hideLoad();
-                toastConfig('Error', 'Password incorrect!');
+                toastConfig('Error', 'Sai thông tin tài khoản hoặc mật khẩu!');
                 return;
             } else {
                 props.hideLoad();
-                toastConfig('Error', 'Account not exists!');
+                toastConfig('Error', 'Tài khoản không tồn tại!');
                 return;
             }
         } catch(e) {
@@ -99,7 +99,7 @@ const Login = (props) => {
                         <i className="fas fa-futbol"></i>
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Sign in
+                        Đăng nhập
                     </Typography>
                     <Box component="form" onSubmit={handleLogin} noValidate sx={{ mt: 1 }}>
                         <TextField
@@ -107,7 +107,7 @@ const Login = (props) => {
                         required
                         fullWidth
                         id="username"
-                        label="Username"
+                        label="Tên đăng nhập"
                         name="username"
                         autoComplete="username"
                         value={getusername} 
@@ -119,7 +119,7 @@ const Login = (props) => {
                         required
                         fullWidth
                         name="password"
-                        label="Password"
+                        label="Mật khẩu"
                         type={!statusPassword ? "password" : "text"}
                         id="password"
                         autoComplete="current-password"
@@ -128,7 +128,7 @@ const Login = (props) => {
                         />
                         <FormControlLabel
                         control={<Checkbox onChange={togglePassword} value="showPassword" color="primary" />}
-                        label="Show password"
+                        label="Hiển thị mật khẩu"
                         />
                         <Button
                         type="submit"
@@ -146,7 +146,7 @@ const Login = (props) => {
                         </Grid> */}
                         <Grid item>
                             <Link style={{color : 'black'}} to="/register" className='MuiTypography-root MuiTypography-body2 MuiLink-root MuiLink-underlineAlways css-101ca9i-MuiTypography-root-MuiLink-root'>
-                                {"Don't have an account? Sign Up"}
+                                {"Chưa có tài khoản? Đăng ký"}
                             </Link>
                         </Grid>
                         </Grid>

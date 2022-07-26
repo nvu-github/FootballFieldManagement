@@ -5,6 +5,7 @@
 	z-index: 10 !important;
 	// background: color-bg(header);
 	background-color: white !important;
+	border-bottom: 2px solid #198e1e;
 
 	+ .site-content {
 
@@ -16,6 +17,18 @@
 	.brand {
 		margin-right: $header-nav--padding-h;
 	}	
+
+	.menu-content { 
+		width: 100% !important;
+	}
+
+	.sticky-nav {
+		position: fixed;
+  		top: 0;
+		background-color: white;
+		border-bottom: 2px solid #198e1e;
+		width: 100% !important;
+	}
 }
 
 .site-header-inner {
@@ -48,7 +61,11 @@
 		}
 
 		.active {
-			background-color: rgb(185, 185, 185);
+			// background-color: #799d03;
+			height: 3px;
+			// width: 0;
+			background: #198e1e;
+			// position: relative;
 		}
 	}
 	// 
@@ -75,11 +92,28 @@
 		a {
 
 			display: block;
-			padding: 20px !important;
+			padding: 15px !important;
+			position: relative;
 
 			&:hover {
-				background-color: rgb(185, 185, 185);
+				// background-color: #799d03;
 				color: black !important;
+			}
+
+			&::before {
+				content: "";
+				height: 3px;
+				width: 0;
+				background: #198e1e;
+				position: absolute;
+				top: 0px;
+				left: 0;
+				transition: 0.25s cubic-bezier(0.075, 0.82, 0.165, 1);
+			}
+
+			&:hover::before {
+				display: block;
+				width: 100%;
 			}
 		}
     }
@@ -122,6 +156,7 @@
 
 	.header-nav-toggle {
 		display: block;
+		color: black !important;
 
 		// Header navigation when the hamburger is a previous sibling
 		+ .header-nav {
@@ -155,11 +190,39 @@
 				}
 
 			    a:not(.button) {
-					display: inline-flex;
+					// display: inline-flex;
+					display: block;
 			        @include anchor-aspect(header-mobile);
 					padding-top: $header-nav--padding-v__mobile * 0.5;
 					padding-bottom: $header-nav--padding-v__mobile * 0.5;
 			    }
+			}
+
+			.list-reset {
+				li {
+					a {
+						color: white;
+
+						&:hover {
+							background-color: #198e1e;
+							color: white !important;
+						}
+
+						&::before {
+							content: "";
+							height: 0;
+						}
+					}
+					
+				}
+		
+				.active {
+					// background-color: #799d03;
+					height: 60px;
+					// width: 0;
+					background: #198e1e;
+					// position: relative;
+				}
 			}
 
 			a.button {
