@@ -16,6 +16,7 @@ import {connect} from 'react-redux';
 import * as actions from '../store/actions';
 
 const SignUp = (props) => {
+    // console.log(0)
     const theme = createTheme();
     const history = useHistory();
     const [username, setUsername]       = useState('');
@@ -183,7 +184,7 @@ const SignUp = (props) => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
                 >
-                Sign Up
+                Đăng ký
                 </Button>
                 <Grid container justifyContent="flex-end">
                 <Grid item>

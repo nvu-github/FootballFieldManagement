@@ -30,8 +30,8 @@ function Sidebar(props) {
   return (
     <div
       className="sidebar"
-      data-color={props.bgColor}
-      data-active-color={props.activeColor}
+      data-color={"black"}
+      data-active-color={"info"}
     >
       <div className="logo">
           <Link to="/" className="simple-text logo-mini">
@@ -46,7 +46,7 @@ function Sidebar(props) {
       <div className="sidebar-wrapper" ref={sidebar}>
         <Nav>
           {props.routes.map((prop, key) => {
-            if (prop.path !== '/' && prop.path !== '/notfound') {
+            if (prop.path !== "/" && prop.path !== "/notfound" && prop.permission === "1") {
               return (
                 <li
                   className={
@@ -55,7 +55,7 @@ function Sidebar(props) {
                   key={key}
                 >
                   <NavLink
-                    to={prop.layout + prop.path}
+                    to={prop.path}
                     className="nav-link"
                     activeClassName="active"
                   >

@@ -5,12 +5,29 @@ $fa-font-path : "~@fortawesome/fontawesome-free-webfonts/webfonts";
 @import "~@fortawesome/fontawesome-free-webfonts/scss/fa-brands.scss";
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-    color: black
+    color: black;
 }
 
 label {
     color: black;
     font-weight: 600;
+}
+
+.btn {
+    font-weight: 600;
+    border: none;
+    padding: 10px 10px;
+    font-size: 16px;
+    line-height: 1.5;
+    border-radius: 5px;
+}
+
+.btn-primary {
+    background-color: #34b5b8 !important;   
+
+    &:hover {
+        background-color: rgb(53, 207, 210) !important;   
+    }
 }
 
 .btn-delete {
@@ -27,12 +44,14 @@ label {
 
 .wrapper {
     background-color: #f4f3ef;
+    // overflow-x: hidden !important;
 }
 
 .container-main {
     // padding: 0 30px 30px;
-    min-height: calc(100vh - 123px);
-    margin-top: 193px;
+    min-height: calc(100vh - 10px);
+    // margin-top: 193px;
+    // overflow: hidden;
 }
 
 .container {
@@ -44,6 +63,14 @@ label {
 
     .dropdownToggleLogin {
         color: black !important;
+        // border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        background-color: #198e1e;
+        padding: 0;
+        padding-left: 4px;
+        margin: 0 !important;
+        font-size: 15px;
 
         &:hover {
             // background-color: white !important;
@@ -65,3 +92,34 @@ label {
 #insertFiles-1 {
     display: none;
 }
+
+.carousel-indicators li {
+    visibility: hidden; 
+} 
+
+.carousel-inner {
+    .carousel-item {
+        img {
+            width: 950px;
+        }
+    }
+}
+
+.owl-carousel.owl-loaded {
+    padding: 0 50px;
+}
+
+.owl-prev, .owl-next {
+    font-size: 50px !important;
+    width: 15px;
+    // height: 100px;
+    margin: 0;
+    position: absolute;
+    top: 35%;
+    transform: translateY(-50%);
+    display: block !important;
+    border:0px solid black;
+}
+.owl-prev { left: 10px; }
+.owl-next { right: 10px; }
+.owl-prev i, .owl-next i {transform : scale(2,5); color: #ccc;}

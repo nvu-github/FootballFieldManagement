@@ -5,7 +5,7 @@ import {
     CardBody,
     Row,
     Col,
-  } from "reactstrap";
+} from "reactstrap";
   
 const Home = (props) => {
 

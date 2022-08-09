@@ -1,59 +1,49 @@
 import React, { useRef, useEffect} from "react";
-import PerfectScrollbar from "perfect-scrollbar";
+// import PerfectScrollbar from "perfect-scrollbar";
 import { useLocation } from "react-router-dom";
-
-// import DemoNavbar from "../components/admin/Navbars/DemoNavbar";
-import Footer from "../components/admin/Footer/Footer";
-// import Sidebar from "../components/admin/Sidebar/Sidebar";
-// import FixedPlugin from "../components/admin/FixedPlugin/FixedPlugin";
-import Header from "../components/layout/Header";
-
-import routes from "../routes";
-import  { ReactNotifications }  from 'react-notifications-component';
-import 'react-notifications-component/dist/theme.css';
-import Loader from '../components/elements/LoadPage';
 import { connect } from "react-redux";
 
-var ps;
+import DemoNavbar from "../components/admin/Navbars/DemoNavbar";
+import Footer from "../components/admin/Footer/Footer";
+import Sidebar from "../components/admin/Sidebar/Sidebar";
+// import FixedPlugin from "../components/admin/FixedPlugin/FixedPlugin";
+
+import { routes } from "../routes";
+// var ps;
 
 const LayoutAdmin = (props) => {
     const mainPanel = useRef();
     const location = useLocation();
+    const routesSystem = routes;
+    const noRoutes = ['/login', '/notfound', '/register'];
 
-    useEffect(() => {
-        if (navigator.platform.indexOf("Win") > -1) {
-            ps = new PerfectScrollbar(mainPanel.current);
-            document.body.classList.toggle("perfect-scrollbar-on");
-        }
-        return function cleanup() {
-            if (navigator.platform.indexOf("Win") > -1) {
-                ps.destroy();
-                document.body.classList.toggle("perfect-scrollbar-on");
-            }
-            };
-    }, []);
+    const styleAdmin = {
+        position: "relative",
+        float: "right",
+        width: "calc(100% - 260px)",
+        backgroundColor: "#f4f3ef"
+    }
 
     useEffect(() => {
         mainPanel.current.scrollTop = 0;
         document.scrollingElement.scrollTop = 0;
     }, [location]);
-
+    
     return (
         <>
-            <ReactNotifications />  
-            <div style={(!props.isLogin) ? {backgroundColor: 'white'} : {backgroundColor: '#f4f3ef'}} className="wrapper">
-                {(location.pathname !== '/notfound' && location.pathname !== '/login' && location.pathname !== '/register')
-                ? <Header routes={routes} />
+            <div style={(noRoutes.includes(location.pathname)) ? {backgroundColor: 'white'} : {backgroundColor: '#f4f3ef'}} className="wrapper">
+                {!noRoutes.includes(location.pathname)
+                ? <Sidebar routes={routesSystem} {...props} />
                 : '' }
-                <div style={(!props.isLogin) ? {backgroundColor: 'white'} : {backgroundColor: '#f4f3ef'}} className="main-panel" ref={mainPanel}>
-                    <div className="container container-main">
+                <div style={(noRoutes.includes(location.pathname)) ? {backgroundColor: 'white'} : styleAdmin} className="main-panel" ref={mainPanel}>
+                    {/* <div style={(noRoutes.includes(location.pathname)) ? {marginTop: 0} : {marginTop: '130px'}} className="container container-main"> */}
+                    <DemoNavbar {...props} />
                     {props.children}
-                    </div>
-                {(location.pathname !== '/notfound' && location.pathname !== '/login' && location.pathname !== '/register')
+                    {/* </div> */}
+                {!noRoutes.includes(location.pathname)
                 ? <Footer fluid />
                 : ''}
                 </div>
-                <Loader />
             </div>
         </>
     );

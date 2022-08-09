@@ -12,14 +12,14 @@ import {
   DropdownMenu,
   DropdownItem,
   Container,
-  InputGroup,
-  InputGroupText,
-  InputGroupAddon,
-  Input,
+//   InputGroup,
+//   InputGroupText,
+//   InputGroupAddon,
+//   Input,
 } from "reactstrap";
 import { useHistory } from "react-router-dom";
 
-import routes from "../../../routes";
+import { routes } from "../../../routes";
 import * as actions from "../../../store/actions";
 
 const Header = (props) => {
@@ -121,7 +121,7 @@ const Header = (props) => {
             <span className="navbar-toggler-bar navbar-kebab" />
             </NavbarToggler>
             <Collapse isOpen={isOpen} navbar className="justify-content-end">
-            <form>
+            {/* <form>
                 <InputGroup className="no-border">
                 <Input placeholder="Search..." />
                 <InputGroupAddon addonType="append">
@@ -130,7 +130,7 @@ const Header = (props) => {
                     </InputGroupText>
                 </InputGroupAddon>
                 </InputGroup>
-            </form>
+            </form> */}
             <Nav navbar>
                 <Dropdown
                 nav

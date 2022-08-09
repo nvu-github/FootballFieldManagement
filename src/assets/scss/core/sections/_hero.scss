@@ -1,72 +1,72 @@
-.hero {
+// .hero {
 
-	.section-inner {
-		padding-top: $hero--padding-t__mobile;
-		padding-bottom: $hero--padding-b__mobile;
-	}
-}
+// 	.section-inner {
+// 		padding-top: $hero--padding-t__mobile;
+// 		padding-bottom: $hero--padding-b__mobile;
+// 	}
+// }
 
-.hero-inner {
+// .hero-inner {
 
-	// Affects only hero full
-	> .hero-content + .hero-figure,
-	> .hero-figure + .hero-content {
-		margin-top: $hero--inner-padding-v_mobile;
-	}
+// 	// Affects only hero full
+// 	> .hero-content + .hero-figure,
+// 	> .hero-figure + .hero-content {
+// 		margin-top: $hero--inner-padding-v_mobile;
+// 	}
 
-	> .hero-figure {
+// 	> .hero-figure {
 
-		> a {
-			display: inline-flex;
-			// prevents stretching
-			align-items: center;
-			vertical-align: top;
-		}
-	}
-}
+// 		> a {
+// 			display: inline-flex;
+// 			// prevents stretching
+// 			align-items: center;
+// 			vertical-align: top;
+// 		}
+// 	}
+// }
 
-@include media( '<=medium' ) {
+// @include media( '<=medium' ) {
 
-	.hero {
+// 	.hero {
 
-		.split-wrap {
+// 		.split-wrap {
 
-			.split-item {
+// 			.split-item {
 
-				.split-item-content {
-					margin-bottom: $hero--inner-padding-v_mobile;
-				}
-			}
+// 				.split-item-content {
+// 					margin-bottom: $hero--inner-padding-v_mobile;
+// 				}
+// 			}
 
-			&.invert-mobile {
+// 			&.invert-mobile {
 
-				.split-item {
+// 				.split-item {
 
-					.split-item-image {
-						margin-bottom: $hero--inner-padding-v_mobile;
-					}
-				}
-			}
-		}
-	}
-}
+// 					.split-item-image {
+// 						margin-bottom: $hero--inner-padding-v_mobile;
+// 					}
+// 				}
+// 			}
+// 		}
+// 	}
+// }
 
-@include media( '>medium' ) {
+// @include media( '>medium' ) {
 
-	.hero {
+// 	.hero {
 
-		.section-inner {
-			padding-top: $hero--padding-t__desktop;
-			padding-bottom: $hero--padding-b__desktop;
-		}
-	}
+// 		.section-inner {
+// 			padding-top: $hero--padding-t__desktop;
+// 			padding-bottom: $hero--padding-b__desktop;
+// 		}
+// 	}
 
-	.hero-inner {
+// 	.hero-inner {
 
-		// Affects only hero full
-		> .hero-content + .hero-figure,
-		> .hero-figure + .hero-content {
-			margin-top: $hero--inner-padding-v_desktop;
-		}
-	}
-}
+// 		// Affects only hero full
+// 		> .hero-content + .hero-figure,
+// 		> .hero-figure + .hero-content {
+// 			margin-top: $hero--inner-padding-v_desktop;
+// 		}
+// 	}
+// }

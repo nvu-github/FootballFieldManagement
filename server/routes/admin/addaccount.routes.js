@@ -6,6 +6,6 @@ router.post('/insert', Cmanageaccount.addAccount);
 router.post('/delete', Cmanageaccount.delAccount);
 router.post('/getaccountupdate', Cmanageaccount.getAccountUpdate);
 router.post('/update', Cmanageaccount.updateAccount);
-router.get('/getaccount', Cmanageaccount.index);
+router.get('/getaccount', Cmanageaccount.getAllAccount);
 
 module.exports = router

@@ -3,24 +3,27 @@ const { mongooseToObject } = require('../../../util/mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const UsersModel = require('../../models/user.models');
+const sha1 = require('sha1');
 
 class Clogin {
 
     async refreshToken(req, res, next){
-        const dataReqRefresh = jwt.verify(req.body.refreshToken, process.env.REFRESH_SECRET_KEY_JWT); 
-        const dataToken = dataReqRefresh.dataToken;
-        const token = jwt.sign({dataToken}, process.env.ACCESS_SECRET_KEY_JWT, {
-            expiresIn: process.env.TIME_ACCESS_TOKEN,
-        });
-        const tokenRefresh = jwt.sign({dataToken}, process.env.REFRESH_SECRET_KEY_JWT, {
-            expiresIn: process.env.TIME_REFRESH_TOKEN,
-        });
-        const saveToken = await Mlogin.findOneAndUpdate({'_id': dataToken.id}, {'token': token, 'refreshToken': tokenRefresh}, {returnOriginal: false, upsert: true}); 
-        if (saveToken) {
-
+        try {
+            const dataReqRefresh = jwt.verify(req.body.refreshToken, process.env.REFRESH_SECRET_KEY_JWT); 
+            const dataToken = dataReqRefresh.dataToken;
+            const token = jwt.sign({dataToken}, process.env.ACCESS_SECRET_KEY_JWT, {
+                expiresIn: process.env.TIME_ACCESS_TOKEN,
+            });
+            const tokenRefresh = jwt.sign({dataToken}, process.env.REFRESH_SECRET_KEY_JWT, {
+                expiresIn: process.env.TIME_REFRESH_TOKEN,
+            });
+            const saveToken = await Mlogin.findOneAndUpdate({'_id': dataToken.id}, {'token': token, 'refreshToken': tokenRefresh}, {returnOriginal: false, upsert: true}); 
+            res.setHeader('Content-Type', 'application/json');
+            res.status(200).json({token: token, tokenRefresh: tokenRefresh});
+        } catch (err) {
+            res.status(401).json({err});
         }
-        res.setHeader('Content-Type', 'application/json');
-        res.status(200).json({token: token, tokenRefresh: tokenRefresh});
+        
     }
 
     async checkpass(pass1, pass2) {
@@ -54,7 +57,7 @@ class Clogin {
                     const saveToken = await Mlogin.findOneAndUpdate({'_id': id}, {'token': token, 'refreshToken': tokenRefresh}, {returnOriginal: false, upsert: true});
                     if (saveToken) {
                         datalogin.resultUsername = dataResult['username'];
-                        // datalogin.resultPermission = dataResult['permission'];
+                        datalogin.resultPermission = sha1(dataResult['permission']);
                         datalogin.statuslogin = 'success';
                         datalogin.token = token;
                         datalogin.refreshtoken = tokenRefresh

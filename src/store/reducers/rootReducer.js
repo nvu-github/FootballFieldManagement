@@ -17,7 +17,9 @@ const userPersistConfig = {
     whitelist: ['isLogin', 'userInfo']
 };
 
-export default () => combineReducers({
+const rootReducer = () => combineReducers({
     userLogin: persistReducer(userPersistConfig, loginReducer),
     app: application
-})
+});
+
+export default rootReducer;

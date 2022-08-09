@@ -1,5 +1,7 @@
 .site-footer {
 	position: relative;
+	background-color: #198e1e;
+	padding: 0 50px;
 
 	&::before {
 		content: '';
@@ -113,11 +115,11 @@
 		padding: $footer-social--inner-padding;
 
 		svg {
-			fill: color-icon(social);
+			// fill: color-icon(social);
 			transition: fill .15s ease;
 
 			.invert-color & {
-				fill: color-icon(social-inverse);
+				// fill: color-icon(social-inverse);
 			}
 		}
 

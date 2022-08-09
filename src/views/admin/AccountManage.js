@@ -270,7 +270,7 @@ class AccountManage extends React.Component {
                             }}
                             /> */}
                             <Col className="text-right" md="12">
-                                <Button className="btn btn-primary" onClick={this.toggle}>Add account</Button>
+                                <button className="btn btn-primary" onClick={this.toggle}>Add account</button>
                             </Col>
                             <TableAccount 
                             handleupdate={(e) => {this.handleGetUpdate(e, "value")}} 

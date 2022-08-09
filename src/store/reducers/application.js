@@ -6,7 +6,7 @@ const initialState = {
     statusmodal: false
 };
   
-export default (state = initialState, action) => {
+const application = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.SHOW_LOADER:
             return { ...state, loading: true };
@@ -23,4 +23,6 @@ export default (state = initialState, action) => {
         return state;
     }
 };
+
+export default application;
   

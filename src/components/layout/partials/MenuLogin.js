@@ -1,6 +1,4 @@
 import React from 'react';
-// import classNames from 'classnames';
-// import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
 import * as actions from '../../../store/actions';
 import { useHistory, Link } from "react-router-dom";
@@ -29,47 +27,28 @@ const MenuLogin = (props) => {
 
     return (
         <>
-            {/* <ul className="list-reset header-nav-right">
-                <li>
-                    {!isLogin 
-                    ? <Link to="/login" className="button button-primary button-wide-mobile button-sm">Sign in</Link>
-                    : <button className="button button-primary button-wide-mobile button-sm" onClick={ () => {signout()}}>Sign out</button>
-                    }
-                </li>
-            </ul> */}
-            {/* <Dropdown 
-                className='dropdownLogin'
-                nav
-                isOpen={dropdownOpen}
-                toggle={(e) => dropdownToggle(e)}
-                >
-                <DropdownToggle className='dropdownToggleLogin' caret nav>
-                    <p>
-                    <i className="far fa-bell"></i>
-                    <span className="d-lg-none d-md-block">Some Actions</span>
-                    </p>
+            <Dropdown className='dropdownLogin' isOpen={dropdownOpen} group toggle={dropdownToggle}>
+                <DropdownToggle className='dropdownToggleLogin' caret>
+                <i className="fas fa-user"></i>
                 </DropdownToggle>
                 <DropdownMenu right>
-                    <DropdownItem style={{ cursor: "pointer" }} tag="a"><i className="fas fa-exchange-alt"></i> Change password</DropdownItem>
-                    <DropdownItem style={{ cursor: "pointer" }} onClick={() => {signout()}} tag="a"> <i className="fas fa-sign-out-alt"></i> Logout</DropdownItem>
-                </DropdownMenu>
-                </Dropdown> */}
-            { isLogin
+                { isLogin
                 ? (
-                    <Dropdown className='dropdownLogin' isOpen={dropdownOpen} group toggle={dropdownToggle}>
-                        <DropdownToggle className='dropdownToggleLogin' nav caret>
-                        <i className="fas fa-user"></i> Hello, {(props.dataLogin.userInfo) ? props.dataLogin.userInfo.username  : ''}
-                        </DropdownToggle>
-                        <DropdownMenu>
-                        <DropdownItem style={{ cursor: "pointer" }}><i className="fas fa-exchange-alt"></i> Change password</DropdownItem>
-                        <DropdownItem divider />
-                        <DropdownItem style={{ cursor: "pointer" }} onClick={() => {signout()}}><i className="fas fa-sign-out-alt"></i> Logout</DropdownItem>
-                        </DropdownMenu>
-                    </Dropdown>
+                <>
+                    <DropdownItem disabled>Xin chào, <span className='font-weight-bold'>{(props.dataLogin.userInfo) ? props.dataLogin.userInfo.username  : ''}</span></DropdownItem>
+                    <DropdownItem divider />
+                    <DropdownItem style={{ cursor: "pointer" }}><i className="fas fa-exchange-alt"></i> Đổi mật khẩu</DropdownItem>
+                    <DropdownItem style={{ cursor: "pointer" }} onClick={() => {signout()}}><i className="fas fa-sign-out-alt"></i> Đăng xuất</DropdownItem>
+                </>
                 )
-                : <Link to="/login" style={{color: 'black', fontSize: '16px'}}><i className="fas fa-user"></i> Sign in</Link>
+                : (
+                <>
+                    <Link style={{color: 'black'}} to="/login"><DropdownItem style={{ cursor: "pointer" }} onClick={() => {signout()}}><i className="fas fa-sign-in-alt"></i> Đăng nhập</DropdownItem></Link>
+                </>
+                ) 
             }
-            
+            </DropdownMenu>
+            </Dropdown>
                 
         </>
     );

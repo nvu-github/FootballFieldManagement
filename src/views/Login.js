@@ -19,7 +19,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 
 const Login = (props) => {
-
     const [getusername, setUsername] = useState('');
     const [getpassword, setPassword] = useState('');
     const [statusPassword, setStatusPassword] = useState(false);
@@ -57,6 +56,7 @@ const Login = (props) => {
             if (data.data.dataloginStatus === 'success') {
                 const dataReduxLogin = {
                     username: data.data.user.dataloginUsername,
+                    permission: data.data.user.dataloginPermission
                 }
                 const dataToken = {
                     accessToken: data.data.user.dataloginToken,
@@ -136,7 +136,7 @@ const Login = (props) => {
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                         >
-                        Sign In
+                        Đăng nhập
                         </Button>
                         <Grid style={{ justifyContent: 'right' }} container>
                         {/* <Grid item xs>

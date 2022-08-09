@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Link, useLocation } from 'react-router-dom';
 import Logo from './partials/Logo';
-import MenuLogin from './partials/MenuLogin';
+// import MenuLogin from './partials/MenuLogin';
 import BannerHeader from './BannerHeader';
 import {connect} from 'react-redux';
+import sha1 from 'sha1';
 
 const propTypes = {
   navPosition: PropTypes.string,
@@ -49,17 +50,16 @@ const Header = ({
         document.addEventListener('click', clickOutside);
         window.addEventListener('scroll', stickNavbar);
         return () => {
-        document.removeEventListener('keydown', keyPress);
-        document.removeEventListener('click', clickOutside);
-        closeMenu();
-        window.removeEventListener('scroll', stickNavbar);
+            document.removeEventListener('keydown', keyPress);
+            document.removeEventListener('click', clickOutside);
+            closeMenu();
+            window.removeEventListener('scroll', stickNavbar);
         };
     });  
 
     const stickNavbar = () => {
         if (window !== undefined) {
           let windowHeight = window.scrollY;
-          // window height changed for the demo
           windowHeight > 150 ? setStickyClass('sticky-nav') : setStickyClass('');
         }
     };
@@ -86,25 +86,21 @@ const Header = ({
         closeMenu();
     }  
 
-    const classes = classNames(
-        'site-header',
-        bottomOuterDivider && 'has-bottom-divider',
-        className
-    );
+    // const classes = classNames(
+    //     'site-header',
+    //     bottomOuterDivider && 'has-bottom-divider',
+    //     className
+    // );
 
     return (
         <header
         // {...props}
-        className={classes}
+        className={'site-header'}
         >
         <BannerHeader />
         <div className={`menu-content ${stickyClass}`}>
             <div className="container">
-                <div className={
-                classNames(
-                    'site-header-inner',
-                    bottomDivider && 'has-bottom-divider'
-                )}>
+                <div className={'site-header-inner'}>
                 <Logo />
                 {!hideNav &&
                     <>
@@ -133,23 +129,32 @@ const Header = ({
                             )}>
                             {props.routes.map((prop, key) => {
                                 if (prop.path !== '/' && prop.component !== '') {
-                                    return (
-                                        <li
-                                        className={
-                                            activeRoute(prop.path) + (prop.pro ? " active-item" : "")
-                                        }
-                                        key={key}>
-                                            <Link to={prop.layout + prop.path}>{prop.name}</Link>
-                                        </li>
-                                    );
+                                    if (props.dataLogin && prop.auth === true && props.dataLogin.permission === sha1(prop.permission)) {
+                                        return (
+                                            <li
+                                            className={
+                                                activeRoute(prop.path) + (prop.pro ? " active-item" : "")
+                                            }
+                                            key={key}>
+                                                <Link to={prop.path}>{prop.name}</Link>
+                                            </li>
+                                        );
+                                    } 
+                                    if (prop.auth === false && !props.dataLogin) {
+                                        return (
+                                            <li
+                                            className={
+                                                activeRoute(prop.path) + (prop.pro ? " active-item" : "")
+                                            }
+                                            key={key}>
+                                                <Link to={prop.path}>{prop.name}</Link>
+                                            </li>
+                                        );
+                                    }
                                 }
                                 return null;
                             })}
                         </ul>
-
-                        <div className='menuLogin'>
-                            <MenuLogin />
-                        </div>
                         </div>
                     </nav>
                     </>}
@@ -162,19 +167,11 @@ const Header = ({
 
 const mapStateToProps = state =>{
     return {
-        // isLogin: state.userLogin.isLogin
+        isLogin: state.userLogin.isLogin,
+        dataLogin: state.userLogin.userInfo
     }
 };
-
-const mapDispatchToProps = dispatch => {
-    return {
-        // userLogout: () => dispatch(actions.LogoutUser()),
-        // showLoad: () => dispatch(actions.showLoader()),
-        // hideLoad: () => dispatch(actions.hideLoader()),
-    };
-};
-
 Header.propTypes = propTypes;
 Header.defaultProps = defaultProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, null)(Header);

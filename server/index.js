@@ -14,12 +14,12 @@ const isProduction = process.env.NODE_ENV === "production";
 // import class
 const routes = require('./routes/index.routes');
 const db = require('./config/db');
-const authMidlleware = require('./app/core/auth.middleware');
+// const authMidlleware = require('./app/core/auth.middleware');
 const cors = require('cors');
 
 const corsOptions ={
   origin: process.env.REACT_ENV_CLIENT, 
-  credentials:true,            //access-control-allow-credentials:true
+  credentials:true,         
   optionSuccessStatus:200
 }
 app.use(cors(corsOptions));

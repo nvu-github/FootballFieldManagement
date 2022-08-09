@@ -1,85 +1,106 @@
+// admin
 import Dashboard from "./views/admin/AccountManage";
 import Typography from "./views/admin/Typography";
 import TableList from "./views/admin/Tables";
 import UserPage from "./views/admin/User";
-import HomAdmin from "./views/HomAdmin";
-// import Login from "./views/Login";
-// import Register from "./views/Register";
+import HomeAdmin from "./views/HomeAdmin";
 
-const routes = [
+// user
+import HomeUser from "./views/Home";
+import Datsan from "./views/User/Datsan";
+
+export const routes = [
+    // admin
     {
         path: "/manage-account",
         name: "Account manage",
         icon: "fas fa-users",
         component: Dashboard,
-        layout: "",
+        permission: "1",
+        auth: true
     },
     {
         path: "/user-page",
         name: "User Profile",
         icon: "nc-icon nc-single-02",
         component: UserPage,
-        layout: "",
+        permission: "1",
+        auth: true
     },
     {
         path: "/tables",
         name: "Table List",
         icon: "nc-icon nc-tile-56",
         component: TableList,
-        layout: "",
+        permission: "1",
+        auth: true
     },
     {
         path: "/typography",
         name: "Typography",
         icon: "nc-icon nc-caps-small",
         component: Typography,
-        layout: "",
+        permission: "1",
+        auth: true
+    },
+    {
+        path: "/",
+        name: "Home admin",
+        icon: "nc-icon nc-single-02",
+        component: HomeAdmin,
+        permission: "1",
+        auth: true
+    },
+
+    // User
+    {
+        path: "/home",
+        name: "Trang chủ",
+        icon: "nc-icon nc-single-02",
+        component: HomeUser,
+        permission: "",
+        auth: false
+    },
+
+    {
+        path: "/datsan",
+        name: "Đặt sân",
+        icon: "nc-icon nc-single-02",
+        component: Datsan,
+        permission: "2",
+        auth: false
     },
     {
         path: "/",
         name: "Home",
         icon: "nc-icon nc-single-02",
-        component: HomAdmin,
-        layout: ''
+        component: HomeUser,
+        permission: "",
+        auth: false
     },
-    {
-        path: "/notfound",
-        name: "Not Found",
-        icon: "nc-icon nc-single-02",
-        component: '',
-        layout: ''
-    },
-    {
-        path: "/login",
-        name: "Not Found",
-        icon: "nc-icon nc-single-02",
-        component: '',
-        layout: ''
-    },
-    {
-        path: "/register",
-        name: "Not Found",
-        icon: "nc-icon nc-single-02",
-        component: '',
-        layout: ''
-    },
-];
+]
 
-// export const routesViewer = [
+// export const routesUser = [
+
+//     // user
 //     {
-//         path: "login",
-//         name: "Login",
-//         icon: "",
-//         component: Login,
-//         layout: '/'
+//         path: "/",
+//         name: "Home",
+//         icon: "nc-icon nc-single-02",
+//         component: HomeUser,
 //     },
-//     {
-//         path: "register",
-//         name: "Register",
-//         icon: "",
-//         component: Register,
-//         layout: '/'
-//     }
-// ];
 
-export default routes;
+//     {
+//         path: "/home",
+//         name: "Trang chủ",
+//         icon: "nc-icon nc-single-02",
+//         component: HomeUser,
+//     },
+
+//     {
+//         path: "/datsan",
+//         name: "Đặt sân",
+//         icon: "nc-icon nc-single-02",
+//         component: HomeUser,
+//     },
+// ];

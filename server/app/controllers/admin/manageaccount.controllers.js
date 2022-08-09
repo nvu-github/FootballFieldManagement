@@ -8,8 +8,8 @@ const userModels = require('../../models/user.models');
 
 class Cmanageaccount {
 
-    // [GET] /login
-    async index(req, res, next){
+    // [GET] 
+    async getAllAccount(req, res, next){
         const dataAccount = await Mlogin.find({});
         res.setHeader('Content-Type', 'application/json');
         res.status(200).json({ dataAccount });

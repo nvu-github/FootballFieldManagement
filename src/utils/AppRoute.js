@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import {connect} from 'react-redux';
 
 const AppRoute = ({
   component: Component,
@@ -20,15 +19,4 @@ const AppRoute = ({
     );
 }
 
-const mapStateToProps = state => {
-    return {
-        isLogin: state.userLogin.isLogin,
-        dataLogin: state.userLogin
-    }
-};
-
-const mapDispatchToProps = dispatch => {
-    return { };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(AppRoute);
+export default AppRoute;

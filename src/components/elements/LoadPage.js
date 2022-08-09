@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import loaderImg from '../../assets/images/giphy2.gif';
 import { connect } from 'react-redux';
 
@@ -23,5 +23,5 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(PageLoader);
+export default connect(mapStateToProps, null)(PageLoader);
 
