@@ -1,12 +1,5 @@
-const Rhome = require('./home.routes');
-const Rcollection = require('./collection.routes');
-const Rabout = require('./about.routes');
 const Rmyservices = require('./myservice.routes');
-const Rblog = require('./blog.routes');
-const Rcontact = require('./contact.routes');
-
 const Rdatsan = require('./datsan.routes');
-
 // admin
 const Rhomeadmin = require('./admin/homeadmin.routes');
 const Rmanageaccount = require('./admin/addaccount.routes');
@@ -28,13 +21,8 @@ function routes(app) {
     app.use('/api/datsan', Rdatsan);
 
     // user
-    app.use('/contact', Rcontact);
-    app.use('/blog', Rblog);
     app.use('/services', Rmyservices);
-    app.use('/about', Rabout);
-    app.use('/collection', Rcollection);
-    app.use('/home', Rhome);
-    app.use('/', Rhome);
+    
 }
 
 module.exports = routes;
