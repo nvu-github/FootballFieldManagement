@@ -1,6 +1,6 @@
 .navbar{
-    padding-top: $navbar-padding-base;
-    padding-bottom: $navbar-padding-base;
+    // padding-top: $navbar-padding-base;
+    // padding-bottom: $navbar-padding-base;
     min-height: 53px;
     margin-bottom: 20px;
 
@@ -72,7 +72,7 @@
     &.navbar-absolute{
         position: absolute;
         width: 100%;
-        padding-top: 10px;
+        padding: 5px 0;
         z-index: 1029;
     }
 
@@ -84,6 +84,7 @@
     }
 
     .navbar-wrapper{
+        margin-left: 10px;
         display: inline-flex;
         align-items: center;
 
@@ -222,7 +223,8 @@
       border-bottom: 1px solid #ddd;
 
       a:not(.dropdown-item):not(.btn){
-        color: $default-color;
+        // color: $default-color;
+        color: black;
 
         &.disabled{
           opacity: .5;
@@ -275,7 +277,8 @@
     .navbar-collapse {
       .nav-item {
         a {
-          font-size: $font-size-base;
+            cursor: pointer;
+            font-size: $font-size-base;
         }
       }
     }

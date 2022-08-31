@@ -21,12 +21,11 @@ import Register from './views/Register';
 import NotFound from './views/NotFound';
 
 // stylesheet
-import './App.css';
+import "./App.css";
 import "./assets/admin/scss/paper-dashboard.scss";
 import "./assets/admin/demo/demo.css";
 import "bootstrap/dist/css/bootstrap.css";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
-import 'react-confirm-alert/src/react-confirm-alert.css';
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";    
 import 'react-notifications-component/dist/theme.css';
@@ -65,7 +64,7 @@ const App = (props) => {
                         return (
                             <AppRoute
                                 path={prop.path}
-                                component={prop.component}
+                                component={(prop.permission !== "") ? userIsAuthenticated(prop.component) : prop.component}
                                 layout={LayoutUser}
                                 key={key}
                             />

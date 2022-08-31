@@ -32,7 +32,6 @@
         "perfect-scrollbar": "1.5.1",
         "pino-colada": "^1.5.1",
         "react": "^17.0.2",
-        "react-confirm-alert": "^2.8.0",
         "react-dom": "^17.0.2",
         "react-froala-wysiwyg": "^4.0.13",
         "react-ga": "^3.3.0",
@@ -51,6 +50,10 @@
         "rotating-file-stream": "^3.0.4",
         "sass": "^1.53.0",
         "sha1": "^1.1.1",
+        "socket.io": "^4.1.1",
+        "socket.io-client": "^4.1.1",
+        "sweetalert2": "^11.4.26",
+        "sweetalert2-react-content": "^4.2.0",
         "tar": "^6.1.11"
     },
     "scripts": {

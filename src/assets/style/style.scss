@@ -13,6 +13,22 @@ label {
     font-weight: 600;
 }
 
+// footer
+.footer-text {
+    div {
+        color: black;
+
+        &:not(:first-child) {
+            margin-top: 5px;
+        }
+
+        &:first-child {
+            margin: 5px 0;
+            font-size: 30px;
+        }
+    }
+}
+
 .btn {
     font-weight: 600;
     border: none;
@@ -31,15 +47,33 @@ label {
 }
 
 .btn-delete {
-    padding: 10px 15px;
+    padding: 6px 10px;
+    background-color: white;
+    border: 2px solid #bd2130;
+
+    i {
+        color: #bd2130;
+    }
 }
 
 .btn-update {
-    padding: 10px 15px;
+    background-color: white;
+    padding: 6px 10px;
+    border: 2px solid #1e7e34;
+
+    i {
+        color: #1e7e34;
+    }
 }
 
-.react-confirm-alert-body {
-    border: 1px solid grey !important;
+.btn-accept {
+    padding: 6px 10px;
+    background-color: white !important;
+    border: 2px solid #34b5b8 ;
+
+    i {
+        color: #34b5b8 ;
+    }
 }
 
 .wrapper {
@@ -57,6 +91,8 @@ label {
 .container {
     max-width: 1280px;
 }
+
+// dropdown login
 
 .dropdownLogin {
     font-size: 16px;
@@ -87,12 +123,25 @@ label {
     }
 }
 
+// text editor
+
 .fr-quick-insert { display: none; }
 
 #insertFiles-1 {
     display: none;
 }
 
+.fr-second-toolbar {
+    display: none;
+}
+
+.fr-box.fr-basic.fr-top .fr-wrapper {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-color: rgb(205, 204, 204);
+}
+
+// carousel
 .carousel-indicators li {
     visibility: hidden; 
 } 
@@ -101,10 +150,13 @@ label {
     .carousel-item {
         img {
             width: 950px;
+            height: 520px;
         }
     }
 }
 
+
+// owl carousel
 .owl-carousel.owl-loaded {
     padding: 0 50px;
 }
@@ -123,3 +175,55 @@ label {
 .owl-prev { left: 10px; }
 .owl-next { right: 10px; }
 .owl-prev i, .owl-next i {transform : scale(2,5); color: #ccc;}
+
+// breadcrum
+.breadcrumb {
+    background-color: rgb(244, 243, 239);
+    padding-top: 0;
+    padding-bottom: 0;
+    margin: 0;
+
+    a {
+        &:not(.button) {
+            color: #198e1e !important;
+        }
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+// tabs
+
+.tabs-container {
+    .nav {
+        .nav-item {
+            cursor: pointer;
+            z-index: 100;
+
+            .nav-link {
+                color: black;
+            }
+
+            &:not(:last-child) {
+                margin-bottom: 0 !important; 
+            }
+        }
+    }
+}
+
+// table data
+
+.table-data {
+    border-collapse: collapse;
+    border-radius: 10px;
+
+    th {
+        text-align: center;
+    }
+
+    th, td {
+        border: 1px solid #ddd !important;
+    }
+}

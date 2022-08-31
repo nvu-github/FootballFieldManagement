@@ -1,8 +1,7 @@
 // admin
-import Dashboard from "./views/admin/AccountManage";
-import Typography from "./views/admin/Typography";
+import AccountManage from "./views/admin/AccountManage";
+import YardManage from "./views/admin/YardManage";
 import TableList from "./views/admin/Tables";
-import UserPage from "./views/admin/User";
 import HomeAdmin from "./views/HomeAdmin";
 
 // user
@@ -12,34 +11,26 @@ import Datsan from "./views/User/Datsan";
 export const routes = [
     // admin
     {
-        path: "/manage-account",
-        name: "Account manage",
+        path: "/account-management",
+        name: "Quản lý tài khoản",
         icon: "fas fa-users",
-        component: Dashboard,
+        component: AccountManage,
         permission: "1",
         auth: true
     },
     {
-        path: "/user-page",
-        name: "User Profile",
-        icon: "nc-icon nc-single-02",
-        component: UserPage,
+        path: "/yard-management",
+        name: "Quản lý sân bóng",
+        icon: "fas fa-futbol",
+        component: YardManage,
         permission: "1",
         auth: true
     },
     {
         path: "/tables",
-        name: "Table List",
-        icon: "nc-icon nc-tile-56",
+        name: "Quản lý cửa hàng",
+        icon: "fas fa-store",
         component: TableList,
-        permission: "1",
-        auth: true
-    },
-    {
-        path: "/typography",
-        name: "Typography",
-        icon: "nc-icon nc-caps-small",
-        component: Typography,
         permission: "1",
         auth: true
     },
@@ -79,28 +70,3 @@ export const routes = [
         auth: false
     },
 ]
-
-// export const routesUser = [
-
-//     // user
-//     {
-//         path: "/",
-//         name: "Home",
-//         icon: "nc-icon nc-single-02",
-//         component: HomeUser,
-//     },
-
-//     {
-//         path: "/home",
-//         name: "Trang chủ",
-//         icon: "nc-icon nc-single-02",
-//         component: HomeUser,
-//     },
-
-//     {
-//         path: "/datsan",
-//         name: "Đặt sân",
-//         icon: "nc-icon nc-single-02",
-//         component: HomeUser,
-//     },
-// ];

@@ -305,7 +305,9 @@
     > .content{
         padding: 0 30px 30px;
         min-height: calc(100vh - 123px);
-        margin-top: 93px;
+        margin-top: 62px;
+        padding-top: 20px;
+        background-color: white !important;
     }
 
     > .navbar{

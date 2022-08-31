@@ -3,7 +3,9 @@ import actionTypes from '../actions/actionTypes';
 const initialState = {
     data: {},
     loading: false,
-    statusmodal: false
+    statusmodal: false,
+    count_notify: 0,
+    data_notify: null
 };
   
 const application = (state = initialState, action) => {
@@ -19,6 +21,18 @@ const application = (state = initialState, action) => {
 
         case actionTypes.HIDE_MODAL:
             return {...state, statusmodal: false};
+
+        case actionTypes.NOTIFY_ON:
+            return {
+                ...state, 
+                count_notify: action.count_notify
+            };
+
+        case actionTypes.NOTIFY_OFF:
+            return {
+                ...state, 
+                count_notify: 0
+            };
         default:
         return state;
     }

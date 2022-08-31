@@ -1,0 +1,99 @@
+.support-ticket-laucher {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    width: 60px;
+    height: 60px;
+    background-color: #208ceb;
+    color: #fff;
+    text-align: center;
+    border-radius: 50%;
+    font-size: 30px;
+    padding: 7px;
+    cursor: pointer;
+    z-index: 22071992;
+    -webkit-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
+    box-shadow: 0 1px 10px #dfdfdf;
+
+    .support-ticket-panel {
+        position: fixed;
+        bottom: 90px;
+        right: 20px;
+        min-height: 100px;
+        width: 300px;
+        // max-width: 100%;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 1px 10px #dfdfdf;
+        z-index: 22071992;
+
+        .support-ticket-panel-header {
+            padding: 15px;
+            font-size: 15px;
+            background-color: #208ceb;
+            color: #fff;
+            box-shadow: 0 1px 4px rgb(0 0 0 / 20%);
+            border-radius: 8px 8px 0 0;
+        }
+
+        .support-ticket-panel-body {
+            overflow-y: auto;
+            color: black;
+            position: relative;
+
+            .content-chat {
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                left: 0;
+                overflow-y: auto;
+                max-height: 100%;
+            }
+
+            .message-row {
+                padding: 0;
+                margin-right: 0;
+                margin-left: 0;
+                position: relative;
+                line-height: 0;
+
+                .message-content {
+                    background-color: #ededed;
+                    padding: 6px 9px;
+                    margin-top: 0;
+                    border-radius: 20px;
+                    margin-bottom: 3px;
+                    display: inline-block;
+                    text-align: left;
+                    max-width: 90%;
+                }
+            }
+
+            // .chat-item {
+            //     width: 50%;
+            //     font-size: 15px;
+            // }
+
+            // .your-chat {
+            //     background: #868686;
+            //     margin: 10px;
+            //     border-radius: 1em;
+            //     padding: 1em;
+            //     color: white;
+            //     text-align: left;
+            //     float: left;
+            // }
+
+            // .my-chat {
+            //     background: #009bff;
+            //     margin: 1em;
+            //     border-radius: 1em;
+            //     padding: 1em;
+            //     color: white;
+            //     float: right;
+            // }
+        }
+    }
+}

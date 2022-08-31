@@ -16,3 +16,12 @@ export const hideModal = () => ({
     type: actionTypes.HIDE_MODAL
 })
 
+export const NOTIFY_ON = () => ({
+    type: actionTypes.NOTIFY_ON
+})
+
+export const NOTIFY_OFF = () => ({
+    type: actionTypes.NOTIFY_OFF
+})
+
+

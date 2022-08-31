@@ -28,6 +28,10 @@ instance.interceptors.response.use(
         const status = err.response ? err.response.status : '';
         const originalReq = err.config;
         if (status === 401) {
+            if (!localStorage.getItem('token')) {
+                localStorage.removeItem('persist:userLogin');
+                window.location.replace('/login');
+            }
             return axios.post(process.env.REACT_APP_BACKEND_URL+'/api/login/auth/refreshToken', {refreshToken: JSON.parse(localStorage.getItem('token'))['refreshToken']})
             .then((res) => {
                 const dataToken = {

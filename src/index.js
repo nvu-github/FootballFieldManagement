@@ -5,6 +5,7 @@ import { createBrowserHistory } from "history";
 
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import NotificationProvider from './context/NotificationProvider';
 
 import './assets/scss/style.scss';
 import './assets/style/style.scss';
@@ -18,7 +19,9 @@ const renderApp = (props) => {
     ReactDOM.render(
         <Provider store={reduxStore}>
             <Router history={history}>
-                <App />
+                <NotificationProvider>
+                    <App />
+                </NotificationProvider>
             </Router>
         </Provider>,
         document.getElementById('root')

@@ -117,6 +117,8 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
 // badge color
 
 .badge{
+  padding: 5px !important;
+
   &.badge-default{
       @include badge-color($default-color);
   }

@@ -4,6 +4,10 @@ const Rabout = require('./about.routes');
 const Rmyservices = require('./myservice.routes');
 const Rblog = require('./blog.routes');
 const Rcontact = require('./contact.routes');
+
+const Rdatsan = require('./datsan.routes');
+
+// admin
 const Rhomeadmin = require('./admin/homeadmin.routes');
 const Rmanageaccount = require('./admin/addaccount.routes');
 const Rlogin = require('./login.routes');
@@ -16,12 +20,12 @@ function routes(app) {
     // admin
     app.use('/homeadmin', Rhomeadmin);
     // system
-    // app.use('/api/getfile', Rlogin);
     app.use('/api/login', Rlogin);
     app.use(authMidlleware.middleware);
 
     app.use('/api/system', Rsystem);
     app.use('/api/account', Rmanageaccount);
+    app.use('/api/datsan', Rdatsan);
 
     // user
     app.use('/contact', Rcontact);

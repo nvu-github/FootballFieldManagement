@@ -1,4 +1,3 @@
-const Mlogin = require('../models/hethong/login.models');
 const jwt = require('jsonwebtoken');
 module.exports.middleware = function name(req, res, next) {
     try {
