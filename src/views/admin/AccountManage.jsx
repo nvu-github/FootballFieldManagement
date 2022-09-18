@@ -13,9 +13,10 @@ import toastConfig from "../../config/toastConfig";
 import * as actions from "../../store/actions";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import LoadingTable from "../../components/elements/LoadingTable";
+import sha1 from "sha1";
 
 const MySwal = withReactContent(Swal)
-
 
 class AccountManage extends React.Component {
     constructor(props) {
@@ -27,6 +28,7 @@ class AccountManage extends React.Component {
             refreshkey: 0, 
             valueBtnModal: '',
             textBtnModal: 'Save',
+            className: ''
         }
     }
 
@@ -244,7 +246,7 @@ const ModalAccount = (props) => {
                     </Row>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="primary" className="btnSave" value={props.state.valueBtnModal} onClick={props.submitform}>{props.state.textBtnModal}</Button>{' '}
+                    <Button color="primary" className="btnSave" value={props.state.valueBtnModal} onClick={props.submitform}><i className={props.state.className}></i>{props.state.textBtnModal}</Button>{' '}
                     <Button color="secondary" onClick={props.toggle}>Cancel</Button>
                 </ModalFooter>
                 </Modal>
@@ -254,15 +256,14 @@ const ModalAccount = (props) => {
 }
 
 const TableAccount = (props) => {
+    const permission = props.props.dataLogin.permission;
     const [dataSites, setDataSites] = useState(null);
     
     useEffect(() => {
         let ignore = false;
-        props.props.showLoad();
         async function fetchData() {
             const datafunction = await ManageAccountService.handleGetAccount();
             if (!ignore && datafunction) {
-                props.props.hideLoad();
                 setDataSites(datafunction['data']['dataAccount']);
             }
         }
@@ -284,21 +285,27 @@ const TableAccount = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    { dataSites &&
+                    { dataSites ?
                         dataSites.map((value, index) => {
                             return (
                                 <tr key={index}>
-                                    <td>{index+1}</td>
+                                    <td className="text-center">{index+1}</td>
                                     <td>{value['username']}</td>
                                     <td>{value['permission'] === "1" ? "Admin" : "User" }</td>
                                     <td>{value['timelogin']}</td>
                                     <td className="text-center">
                                         <button className="btn btn-success btn-update mr-2" value={value["_id"]} onClick={props.handleupdate}><i value={value["_id"]} className="fas fa-edit"></i></button>
-                                        <button className="btn btn-danger btn-delete" onClick={props.handledelete} value={value["_id"]}><i value={value["_id"]} className="fas fa-trash"></i></button>
+                                        {(permission === sha1(value['permission'])) ? (
+                                            <button className="btn btn-danger btn-delete" disabled value={value["_id"]}><i value={value["_id"]} style={{color: "white"}} className="fas fa-trash"></i></button>
+                                        ) : (
+                                            <button className="btn btn-danger btn-delete" onClick={props.handledelete} value={value["_id"]}><i value={value["_id"]} className="fas fa-trash"></i></button>
+                                        )}
                                     </td>
                                 </tr>
                             )
                         })
+                        :
+                        <LoadingTable colSpan={5} />
                     }
                 </tbody>
             </Table>
@@ -308,7 +315,8 @@ const TableAccount = (props) => {
 
 const mapStateToProps = state => {
     return {
-        statusModal: state.app.statusmodal
+        statusModal: state.app.statusmodal,
+        dataLogin: state.userLogin.userInfo
     }
 };
 

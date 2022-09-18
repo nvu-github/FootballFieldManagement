@@ -10,7 +10,7 @@ import {
 } from "reactstrap";
 import classnames from "classnames";
 import FormDatSan from "../../components/elements/FormDatSan";
-import Tab1 from "../../components/admin/elements/YardManage/Tab1"
+import Tab1 from "../../components/admin/elements/YardManage/Tab1";
 
 const YardManage = () => {
     const [activeTab, setActiveTab] = useState("1");

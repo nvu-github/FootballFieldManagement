@@ -5,7 +5,7 @@ const LoadingTable = ({ colSpan }) => {
         <>
             <tr>
                 <td colSpan={colSpan} className="text-center">
-                    <i className="fas fa-spinner fa-spin"></i> <span>Loading...</span>
+                    <i className="fas fa-spinner fa-spin"></i> <span>Đang tải dữ liệu...</span>
                 </td>
             </tr>
         </>

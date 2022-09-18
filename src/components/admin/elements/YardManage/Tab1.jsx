@@ -1,15 +1,18 @@
 import {useEffect, useState} from "react"
 import { Table, Badge } from "reactstrap";
 import DatsanService from "../../../../service/DatsanService";
+import LoadingTable from "../../../elements/LoadingTable";
 
 const Tab1 = () => {
     const [dataDatsan, setDataDatsan] = useState([]);
+    const [Loading, setLoading] = useState(false);
 
     useEffect(() => {
         let ignore = false;
         const getList = async () => {
             const data = await DatsanService.handleGetList();
             if ( !ignore && data) {
+                setLoading(true);
                 setDataDatsan(data.data.dataDatsan);
             }
         }
@@ -55,30 +58,37 @@ const Tab1 = () => {
                 </tr>
             </thead>
             <tbody>
-                {dataDatsan.length > 0 
-                ? (
-                    dataDatsan.map((val, index) => {
-                        return (
-                            <tr key={index}>
-                                <th scope="row">{index+1}</th>
-                                <td>{dataSan[val["Field"]]}</td>
-                                <td>{dataTime[val["Time"]]}</td>
-                                <td>200k</td>
-                                <td className="text-center"><Badge color={dataStatus[val["Status"]]["color"]}>{dataStatus[val["Status"]]["text"]}</Badge></td>
-                                <td className="text-center">
-                                    <button className="btn btn-success btn-update mr-2"><i  className="fas fa-edit"></i></button>
-                                    <button className="btn btn-primary btn-accept mr-2"><i className="far fa-check-square"></i></button>
-                                    <button className="btn btn-danger btn-delete"><i className="fas fa-trash"></i></button>
-                                </td>
+                {
+                    Loading 
+                    ? (
+                        dataDatsan.length > 0 ? (
+                            dataDatsan.map((val, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <th scope="row">{index+1}</th>
+                                        <td>{dataSan[val["Field"]]}</td>
+                                        <td>{dataTime[val["Time"]]}</td>
+                                        <td>200k</td>
+                                        <td className="text-center"><Badge color={dataStatus[val["Status"]]["color"]}>{dataStatus[val["Status"]]["text"]}</Badge></td>
+                                        <td className="text-center">
+                                            <button className="btn btn-success btn-update mr-2"><i  className="fas fa-edit"></i></button>
+                                            <button className="btn btn-primary btn-accept mr-2"><i className="far fa-check-square"></i></button>
+                                            <button className="btn btn-danger btn-delete"><i className="fas fa-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                )
+                            })
+                        )
+                        : (
+                            <tr>
+                                <td colSpan={6}>Không có dữ liệu</td>
                             </tr>
                         )
-                    })
-                )
-                : (
-                    <tr>
-                        <td colSpan={6}>Không có dữ liệu</td>
-                    </tr>
-                )}
+                    )
+                    : (
+                        <LoadingTable colSpan={6} />
+                    )
+                }
             </tbody>
         </Table>
     );

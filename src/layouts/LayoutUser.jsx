@@ -41,7 +41,7 @@ const LayoutUser = (props) => {
                 ? <Footer fluid />
                 : ''}
                 </div>
-                <IconChat />
+                {props.isLogin && <IconChat />}
             </div>
         </>
     );

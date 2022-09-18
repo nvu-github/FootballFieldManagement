@@ -1,4 +1,3 @@
-const Rmyservices = require('./myservice.routes');
 const Rdatsan = require('./datsan.routes');
 // admin
 const Rhomeadmin = require('./admin/homeadmin.routes');
@@ -20,9 +19,6 @@ function routes(app) {
     app.use('/api/account', Rmanageaccount);
     app.use('/api/datsan', Rdatsan);
 
-    // user
-    app.use('/services', Rmyservices);
-    
 }
 
 module.exports = routes;

@@ -1,12 +1,15 @@
-import {useState} from "react";
+import {useRef, useState} from "react";
 import ChatContainer from "./ChatContainer";
 import "../../assets/style/ChatComponent.scss";
 const IconChat = () => {
 
     const [showChat, setShowChat] = useState(false);
 
-    const toggleShowChat = () => {
-        setShowChat(!showChat);
+    const toggleShowChat = (e) => {
+        const className = e.target.className;
+        if (className === 'support-ticket-laucher' || className === 'fas fa-comment-dots' || className === 'fas fa-times') {
+            setShowChat(!showChat);
+        }
     }
 
     return (

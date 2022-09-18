@@ -7,7 +7,7 @@ const SystemService = {
 
     handleChangeStatusNotification(id) {
         return axios.post('api/system/change-status', {id});
-    }
+    },
 }
 
 export default SystemService;   

@@ -17,7 +17,6 @@ class Clogin {
             const tokenRefresh = jwt.sign({dataToken}, process.env.REFRESH_SECRET_KEY_JWT, {
                 expiresIn: process.env.TIME_REFRESH_TOKEN,
             });
-            const saveToken = await Mlogin.findOneAndUpdate({'_id': dataToken.id}, {'token': token, 'refreshToken': tokenRefresh}, {returnOriginal: false, upsert: true}); 
             res.setHeader('Content-Type', 'application/json');
             res.status(200).json({token: token, tokenRefresh: tokenRefresh});
         } catch (err) {

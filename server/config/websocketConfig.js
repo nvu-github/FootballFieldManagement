@@ -4,7 +4,6 @@ const portSocket = process.env.PORT_SERVER_SOCKET;
 const ModelNotification = require("../app/models/hethong/notification.models");
 
 module.exports.config = function name(app) {
-    
     const server = http.createServer(app);
 
     const socketIo = socketModule(server, {
@@ -15,7 +14,6 @@ module.exports.config = function name(app) {
 
     socketIo.on("connection", async (socket) => {
         // console.log("New client connected" + socket.id);
-
         socket.on("sendDataClient", async (dataBody) => {
             const { data } = dataBody;
             const dataSave = {
@@ -32,10 +30,11 @@ module.exports.config = function name(app) {
         const dataNotification = await ModelNotification.find({}).sort({ 'Status' : 1});
         socketIo.emit("sendDataServer", {dataNotification: dataNotification});
 
+        socket.emit("getId", socket.id);
+
         socket.on("disconnect", () => {
             console.log("Client disconnected");
         });
-
     });
 
     server.listen(portSocket, () => {
